@@ -103,6 +103,24 @@
   window.addEventListener("load", onScroll);
   setTimeout(onScroll, 60); setTimeout(onScroll, 600);
 
+  /* ---- reveal failsafe: anything that has reached the screen is shown, even after a fast flick ---- */
+  var pending = Array.prototype.slice.call(document.querySelectorAll("[data-sc-in]"));
+  var deepest = 0;
+  function showReached() {
+    deepest = Math.max(deepest, window.scrollY + window.innerHeight * 1.1);
+    pending = pending.filter(function (el) {
+      if (el.getBoundingClientRect().top + window.scrollY < deepest) {
+        el.classList.add("sc-in");
+        Array.prototype.forEach.call(el.querySelectorAll(":scope > *"), function (k) { if (el.hasAttribute("data-sc-stagger")) k.classList.add("sc-in"); });
+        return false;
+      }
+      return true;
+    });
+  }
+  var revTick = false;
+  window.addEventListener("scroll", function () { if (revTick) return; revTick = true; requestAnimationFrame(function () { showReached(); revTick = false; }); }, { passive: true });
+  window.addEventListener("load", showReached); showReached();
+
   /* ---- current page in the bar ---- */
   function norm(p) { p = p.replace(/\.html$/, "").replace(/\/index$/, "").replace(/\/+$/, ""); return p || "/"; }
   var here = norm(location.pathname), section = here.indexOf("/blog/") === 0 ? "/blog" : here;
