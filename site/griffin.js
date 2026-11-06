@@ -111,17 +111,18 @@
     window.matchMedia('(min-width: 1040px)').addEventListener('change', function (e) { if (e.matches) menu.open = false; });
   }
 
-  /* ---- contact form: posts to Netlify Forms, which emails Kelley. Without JS the plain POST still works. ---- */
-  Array.prototype.forEach.call(document.querySelectorAll("form.form[data-netlify]"), function (f) {
+  /* ---- contact form: posts to FormSubmit, which emails Kelley. Without JS the plain POST still works. ---- */
+  Array.prototype.forEach.call(document.querySelectorAll("form.form[data-send]"), function (f) {
     var btn = f.querySelector('button[type="submit"]');
     var status = f.querySelector('.form__done');
     f.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!f.checkValidity()) { f.reportValidity(); return; }
       btn.disabled = true;
-      fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(f)).toString() })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); window.location.href = "/thank-you"; })
+      var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; });
+      fetch(f.getAttribute("data-send"), { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
+        .then(function () { window.location.href = "/thank-you"; })
         .catch(function () {
           btn.disabled = false;
           status.textContent = "That didn’t go through. Please try again, or call Kelley at (970) 589-6555.";

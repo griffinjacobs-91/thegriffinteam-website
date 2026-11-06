@@ -86,7 +86,7 @@ Find the sentence in `src/build.py` (search for a few distinctive words) and edi
 - **Accuracy:** no "#1", "top producer", guarantees or claims Kelley can't back up. Keep the legal footer, the Equal Housing Opportunity and REALTOR® marks, and the sold-data disclaimer.
 - **Brand:** Coldwell Banker navy `#012169`, sand gold `#CCB091`, Noto Serif Display headings, Poppins text. Don't restyle the site; add content in the existing patterns. The full brand guide is in Kelley's Google Drive (The Griffin Team Website, 4 Claude website helper, Brand).
 - **Never touch** the domain, DNS, email settings, Netlify account settings, the contact form's setup, or `netlify.toml`. If Kelley asks for any of those, or anything breaks, say so plainly and suggest she contact Griffin Jacobs (griffin@griffinjacobs.com).
-- **Contact form** messages are emailed to kelley@thegriffinteam.com by Netlify. If she stops getting them, that's a Griffin question.
+- **Contact form** messages are emailed to kelley@thegriffinteam.com by FormSubmit (formsubmit.co). If she stops getting them, that's a Griffin question.
 
 ## Quick checks before you open the pull request
 

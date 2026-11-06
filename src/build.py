@@ -19,6 +19,9 @@ TITLE_LINE = "Broker Associate"
 PHONE = "(970) 589-6555"; PHONE_TEL = "+19705896555"
 OFFICE = "(970) 243-0456"; OFFICE_TEL = "+19702430456"
 EMAIL = "kelley@thegriffinteam.com"
+# Contact form messages are relayed to EMAIL by FormSubmit (formsubmit.co); Netlify's own form emails only reach Netlify account members.
+FORM_ENDPOINT = f"https://formsubmit.co/{EMAIL}"
+FORM_ENDPOINT_AJAX = f"https://formsubmit.co/ajax/{EMAIL}"
 ADDR1 = "131 N 6th St, Suite 200"; CITY = "Grand Junction, CO 81501"
 LICENSE = "FA100069554"
 CTA = "Talk to Kelley"
@@ -537,9 +540,12 @@ def build_sold():
 def build_contact():
     body = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split">
-  <form class="form" id="contact-form" name="contact" method="POST" action="thank-you.html" data-netlify="true" netlify-honeypot="company">
-    <input type="hidden" name="form-name" value="contact">
-    <p class="form__hp" hidden><label>Leave this empty<input name="company" tabindex="-1" autocomplete="off"></label></p>
+  <form class="form" id="contact-form" method="POST" action="{FORM_ENDPOINT}" data-send="{FORM_ENDPOINT_AJAX}">
+    <input type="hidden" name="_subject" value="New message from your website">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="{SITE}/thank-you">
+    <p class="form__hp" hidden><label>Leave this empty<input name="_honey" tabindex="-1" autocomplete="off"></label></p>
     <div class="form__fields" style="display:grid;gap:1.5rem">
       <div class="form__row"><label for="f-name">Full name (required)<input id="f-name" name="name" type="text" required autocomplete="name"></label><label for="f-phone">Phone (optional)<input id="f-phone" name="phone" type="tel" autocomplete="tel"></label></div>
       <label for="f-email">Email (required)<input id="f-email" name="email" type="email" required autocomplete="email"></label>
@@ -569,8 +575,8 @@ def build_privacy():
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="prose" data-sc-in>
 <p>This policy explains what happens to information you share on thegriffinteam.com, the website of {NAME}, {TEAM}, {BROKER}.</p>
 <h2>What we collect</h2><p>When you send the contact form, we receive the name, email, phone number, interest and message you type. We collect nothing else about you on purpose. Like every website host, ours keeps short-lived technical logs (such as IP address and browser type) to keep the site running and secure.</p>
-<h2>How we use it</h2><p>Only to answer you and help with your real estate question. Your message is emailed to Kelley and stored with our form provider so it is not lost. We never sell or rent your information, and we do not add you to a mailing list unless you ask.</p>
-<h2>Who else sees it</h2><p>Our website host and form provider, Netlify, processes form messages on our behalf. If you go on to work with Kelley, your details are shared with {BROKER} as part of the transaction and handled under its privacy practices.</p>
+<h2>How we use it</h2><p>Only to answer you and help with your real estate question. Your message is emailed to Kelley. We never sell or rent your information, and we do not add you to a mailing list unless you ask.</p>
+<h2>Who else sees it</h2><p>Our website host, Netlify, and our form provider, FormSubmit, process form messages on our behalf to deliver them to Kelley. If you go on to work with Kelley, your details are shared with {BROKER} as part of the transaction and handled under its privacy practices.</p>
 <h2>Cookies and tracking</h2><p>This site sets no advertising or tracking cookies. Fonts load from Google Fonts, which receives your IP address when your browser requests them.</p>
 <h2>Your choices</h2><p>You can ask us to see, correct or delete the information you sent us at any time. Email {EMAIL} or call {PHONE} and we will take care of it.</p>
 <h2>Children</h2><p>This site is not meant for children under 13, and we do not knowingly collect their information.</p>
