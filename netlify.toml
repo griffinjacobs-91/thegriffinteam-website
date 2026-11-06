@@ -1,0 +1,93 @@
+# Netlify settings for thegriffinteam.com. Netlify reads this file on every deploy.
+
+[build]
+  command = "python3 src/build.py"
+  publish = "site"
+  # Skip the build (and its credits) when a change only touches the photo inbox or the notes for Claude.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)inbox' ':(exclude)CLAUDE.md' ':(exclude)README.md' ':(exclude)docs'"
+
+[build.environment]
+  SITE = "https://thegriffinteam.com"
+  PYTHON_VERSION = "3.11"
+
+# ---- Old Luxury Presence addresses, so links in Google, emails and the AI answer engines keep working ----
+[[redirects]]
+  from = "/agents/kelley-griffin"
+  to = "/team"
+  status = 301
+[[redirects]]
+  from = "/agents/*"
+  to = "/team"
+  status = 301
+[[redirects]]
+  from = "/neighborhoods/mesa"
+  to = "/neighborhood-grand-mesa"
+  status = 301
+[[redirects]]
+  from = "/neighborhoods/:place"
+  to = "/neighborhood-:place"
+  status = 301
+[[redirects]]
+  from = "/powderhorn-mountain-resort"
+  to = "/neighborhood-grand-mesa"
+  status = 301
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/privacy"
+  status = 301
+[[redirects]]
+  from = "/properties/sold"
+  to = "/sold"
+  status = 301
+[[redirects]]
+  from = "/properties/sale"
+  to = "/buyers-guide"
+  status = 301
+[[redirects]]
+  from = "/properties/*"
+  to = "/sold"
+  status = 301
+[[redirects]]
+  from = "/home-search"
+  to = "/buyers-guide"
+  status = 301
+[[redirects]]
+  from = "/home-search/*"
+  to = "/buyers-guide"
+  status = 301
+[[redirects]]
+  from = "/contact-us"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/home-valuation"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/recent-sales"
+  to = "/sold"
+  status = 301
+[[redirects]]
+  from = "/listings"
+  to = "/buyers-guide"
+  status = 301
+[[redirects]]
+  from = "/meet-kelley"
+  to = "/team"
+  status = 301
+
+# ---- Caching and basic security ----
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+[[headers]]
+  for = "/motion/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

@@ -1,0 +1,9 @@
+# Pages are built by src/build.py on every deploy; only the sources are kept here.
+site/*.html
+site/blog/
+site/sitemap.xml
+site/robots.txt
+__pycache__/
+.DS_Store
+inbox/*
+!inbox/README.md

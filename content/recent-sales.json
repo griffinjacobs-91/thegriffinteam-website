@@ -1,0 +1,56 @@
+[
+  {
+    "price": "$975,000",
+    "address": "820 Ouray Avenue, Grand Junction, CO 81501",
+    "details": "3 beds · 3 baths · 3,424 sq ft",
+    "photo": "sold-1.jpg"
+  },
+  {
+    "price": "$900,000",
+    "address": "2457 Industrial Boulevard, Grand Junction, CO 81505",
+    "details": "Commercial",
+    "photo": "sold-2.jpg"
+  },
+  {
+    "price": "$899,000",
+    "address": "1873 K Road, Fruita, CO 81521",
+    "details": "3 beds · 2 baths · 1,606 sq ft",
+    "photo": "sold-3.jpg"
+  },
+  {
+    "price": "$860,000",
+    "address": "359 Aiguille Drive, Grand Junction, CO 81507",
+    "details": "4 beds · 3 baths · 2,724 sq ft",
+    "photo": "sold-4.jpg"
+  },
+  {
+    "price": "$785,000",
+    "address": "782 Captains Way, Grand Junction, CO 81505",
+    "details": "3 beds · 2 baths · 2,286 sq ft",
+    "photo": "sold-5.jpg"
+  },
+  {
+    "price": "$780,000",
+    "address": "2533 Woody Creek Drive, Grand Junction, CO 81505",
+    "details": "5 beds · 3 baths · 2,900 sq ft",
+    "photo": "sold-6.jpg"
+  },
+  {
+    "price": "$763,215",
+    "address": "903 Caledonia Court, Fruita, CO 81521",
+    "details": "4 beds · 3 baths · 2,170 sq ft",
+    "photo": "sold-7.jpg"
+  },
+  {
+    "price": "$760,000",
+    "address": "710 Lime Creek Road, Grand Junction, CO 81505",
+    "details": "4 beds · 3 baths · 2,644 sq ft",
+    "photo": "sold-8.jpg"
+  },
+  {
+    "price": "$756,250",
+    "address": "909 Caledonia Court, Fruita, CO 81521",
+    "details": "4 beds · 4 baths · 2,163 sq ft",
+    "photo": "sold-9.jpg"
+  }
+]

@@ -1,0 +1,20 @@
+/* Static fallback for the example. No animation engine changes. */
+[data-sc-cue], [data-sc-in], [data-sc-stagger] > * { opacity: 1; transform: none; }
+[data-sc-reveal] { clip-path: none; }
+[data-sc-stage] { position: relative; padding: 5rem var(--sc-gutter); overflow: hidden; }
+[data-sc-stage] video { display: none; }
+.hero [data-sc-stage] { display: flex; flex-direction: column; gap: 2rem; padding-top: 8rem; background: var(--gt-navy-deep); }
+.hero .sc-stage__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero .sc-copy { position: relative; inset: auto; max-width: 52rem; order: 1; }
+.hero__card { position: relative; inset: auto; order: 2; margin-left: auto; }
+.who__copy { display: grid; gap: 1.5rem; }
+.who__copy p { position: static; }
+.who__kicker { position: static; margin-bottom: 2rem; }
+.who__pics { height: 28rem; margin-top: 2rem; }
+.tour .sc-stage__poster, .tour .sc-scrim, .tour__top { display: none; }
+.tour__title, .place { position: static; max-width: none; margin-bottom: 2.5rem; }
+.ways__pics { display: none; }
+.ways__grid { grid-template-columns: 1fr; }
+.way { opacity: 1; }
+.close [data-sc-stage] { padding: 0; }
+.valley__stop { display: none; }
