@@ -231,8 +231,8 @@ def write(path, html_text):
 # ---------------------------------------------------------------- home ----
 def home_body():
     ways = [
-      ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "svc-living-room.jpg", "Modern living room with a tall stone fireplace and exposed beams"),
-      ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "svc-kitchen.jpg", "Bright kitchen with a marble-topped wood island and glass-front cabinets"),
+      ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "sold-6.jpg", "A two-story white farmhouse-style home with a stone base and three garage doors on Woody Creek Drive in Grand Junction, sold by Kelley"),
+      ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "sold-1.jpg", "A white modern farmhouse with black trim and a black iron fence on Ouray Avenue in Grand Junction, sold by Kelley"),
       ("Building and land", "New construction, vacant lots and farmland are a specialty. Dane's years as a residential general contractor mean the questions about lots, builders and timelines get real answers.", "contact.html", "Ask about a lot", "listing-2521-woody-creek.jpg", "A vacant residential lot surrounded by homes with mountains in the distance"),
     ]
     rail = ""
@@ -444,7 +444,7 @@ def build_team():
 def build_guides():
     bbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/svc-front-door.jpg" alt="A white home entrance with a wooden front door and hanging lantern" width="1600" height="2000"></figure>
+  <figure data-sc-in><img src="assets/sold-4.jpg" alt="A single-story stucco home with stone accents and a desert-landscaped yard on Aiguille Drive in the Redlands, sold by Kelley" width="1600" height="1066" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to buy?</h2>
     <p>Buying a home is exciting! But it can also be stressful and time consuming. We will use your "wants and needs" list to help you sort through available listings, set up and attend showings, and provide you with relevant information about the different properties. We will continue this process until you find "the one". At this point we will help with all of the contracts and paperwork necessary to complete the transaction.</p>
@@ -461,7 +461,7 @@ def build_guides():
         page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand."), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/svc-kitchen.jpg" alt="A bright kitchen with a marble-topped wood island" width="1600" height="2000"></figure>
+  <figure data-sc-in><img src="assets/sold-1.jpg" alt="A white modern farmhouse with black trim on Ouray Avenue in Grand Junction, sold by Kelley" width="1600" height="1066" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to sell?</h2>
     <p>There are many reasons you may be considering selling your home. Maybe it is time to find a larger home, downsize as kids move away, or move for a new job. For many sellers, the decision to sell often comes down to what their home is worth. Values are constantly changing, but we can provide you with a current market analysis (CMA) so that you can see your home's value in today's market.</p>

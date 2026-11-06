@@ -507,7 +507,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .helps { background: var(--sc-canvas); }
 .helps__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sc-7); }
 .help { display: grid; align-content: start; gap: var(--sc-3); color: inherit; text-decoration: none; }
-.help__pic { aspect-ratio: 4 / 5; overflow: hidden; box-shadow: var(--sc-e2); margin-bottom: var(--sc-3); }
+.help__pic { aspect-ratio: 3 / 2; overflow: hidden; box-shadow: var(--sc-e2); margin-bottom: var(--sc-3); }
 .help__pic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--sc-ease-out); }
 .help:hover .help__pic img, .help:focus-visible .help__pic img { transform: scale(1.04); }
 .help h3 { margin: 0; font-family: var(--sc-font-display); font-weight: 400; font-size: clamp(1.7rem, 1.2rem + 1.4vw, 2.5rem); line-height: 1.05; color: var(--gt-navy); }
