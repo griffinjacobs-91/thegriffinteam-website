@@ -176,7 +176,7 @@ def valley_rail(with_stops=True):
     if with_stops:
         for p in PLACES:
             x, y = VALLEY_X[p["slug"]]
-            stops += f'<g class="valley__stop" data-at="{p["at"]}" role="link" tabindex="0" aria-label="Back to {esc(p["name"])} in the valley tour"><circle cx="{x}" cy="{y}" r="2.2"/><text x="{x}" y="{max(y-6, 7)}" text-anchor="middle">{esc(p["name"]).replace("The ", "")}</text></g>'
+            stops += f'<g class="valley__stop" data-slug="{p["slug"]}" role="link" tabindex="0" aria-label="Jump to {esc(p["name"])} in Six places"><circle cx="{x}" cy="{y}" r="2.2"/><text x="{x}" y="{max(y-6, 7)}" text-anchor="middle">{esc(p["name"]).replace("The ", "")}</text></g>'
     return f"""<div class="valley" aria-hidden="{'false' if with_stops else 'true'}">
   <div class="valley__inner">
     <svg viewBox="0 0 1000 40" preserveAspectRatio="none" aria-label="The Grand Valley skyline, west to east: Loma, Fruita, the Redlands, Grand Junction, Palisade, the Grand Mesa" role="img">
@@ -230,15 +230,6 @@ def write(path, html_text):
 
 # ---------------------------------------------------------------- home ----
 def home_body():
-    places = ""
-    for p in PLACES:
-        places += f"""
-      <div class="place" data-sc-cue="{p['cue']}">
-        <p class="place__elev">{esc(p['elev'])}</p>
-        <h3>{esc(p['name'])}</h3>
-        <p>{esc(p['line'])}</p>
-        <a class="link" href="neighborhood-{p['slug']}.html">Explore {esc(p['name'].replace('The ', 'the '))}</a>
-      </div>"""
     ways = [
       ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "svc-living-room.jpg", "Modern living room with a tall stone fireplace and exposed beams"),
       ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "svc-kitchen.jpg", "Bright kitchen with a marble-topped wood island and glass-front cabinets"),
@@ -247,11 +238,18 @@ def home_body():
     rail = ""
     for i, (h, p, href, label, pic, alt) in enumerate(ways):
         rail += f"""
-        <a class="way" href="{href}" style="--i:{i}">
-          <div class="way__pic" data-sc-tilt="5"><img src="assets/{pic}" alt="{esc(alt)}" width="1600" height="1067" loading="lazy"></div>
+        <a class="help" href="{href}">
+          <div class="help__pic"><img src="assets/{pic}" alt="{esc(alt)}" width="1600" height="1067" loading="lazy"></div>
           <h3>{h}</h3>
           <p>{p}</p>
           <span class="link">{label}</span>
+        </a>"""
+    placecards = ""
+    for p in PLACES:
+        placecards += f"""
+        <a class="placecard" id="place-{p['slug']}" href="neighborhood-{p['slug']}.html">
+          <img src="assets/{p['photo']}" alt="{esc(p['alt'])}" width="1600" height="1067" loading="lazy">
+          <span class="placecard__text"><span class="placecard__elev">{esc(p['elev'])}</span><span class="placecard__name">{esc(p['name'])}</span><span class="placecard__line">{esc(p['line'])}</span></span>
         </a>"""
     big = REVIEWS[3][1]
     big_excerpt = "We probably walked through 50 homes with her, and not once did she show an ounce of frustration or impatience. Instead, she listened carefully, learned what really mattered to us, and ultimately found the perfect home for us."
@@ -270,42 +268,38 @@ def home_body():
     }
     return f"""{bar()}
 <span data-sc-progress></span>
-<div class="sc-grain" aria-hidden="true"></div>
 <main id="main" tabindex="-1">
 
-  <!-- 1 · ARRIVAL: the valley from the air; Kelley arrives as a framed photograph, not a cutout -->
-  <section class="hero ground--dark" data-ground="dark" data-sc-act="scrub" data-sc-span="2.6" data-sc-dwell="0.34">
-    <div data-sc-stage>
-      <img class="sc-stage__poster" src="assets/hero-orchard-aerial.jpg" alt="" width="1600" height="900" fetchpriority="high">
-      <video data-sc-scrub data-sc-src="motion/hero.mp4" data-sc-src-mobile="motion/hero-m.mp4" muted playsinline></video>
-      <div class="hero__plane hero__haze" aria-hidden="true"></div>
-      <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
-      <figure class="hero__card" data-sc-parallax="-0.45">
-        <img src="assets/kelley-headshot.jpg" alt="{NAME}, {TITLE_LINE}" width="1200" height="1200" fetchpriority="high" data-no-fade="1">
-        <figcaption><span>{NAME}</span><span>REALTOR® · {TITLE_LINE} · {BROKER}</span></figcaption>
-      </figure>
-      <div class="sc-copy sc-copy--lead" data-sc-cue="0 0.8 0">
-        <p class="hero__who">Fruita · Grand Junction · the Grand Valley</p>
-        <h1 class="sc-display" data-sc-kinetic="lines">Real estate for the valley we call home.</h1>
-        <p class="hero__lede">Buying, selling, building and land, with a Colorado native who has lived here since 2008 and sold homes in every corner of it.</p>
-        <div class="hero__actions"><a class="cta cta--solid" href="contact.html">{CTA}</a><a class="cta" href="team.html">Meet Kelley</a></div>
-      </div>
+  <!-- 1 · ARRIVAL: the valley from the air, playing quietly behind the headline. Normal scrolling. -->
+  <section class="hero calm-hero ground--dark" data-ground="dark">
+    <img class="calm-hero__media" src="assets/hero-orchard-aerial.jpg" alt="" width="1600" height="900" fetchpriority="high">
+    <video class="calm-hero__media calm-hero__video" data-src="motion/hero-loop.mp4" data-src-mobile="motion/hero-loop-m.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+    <div class="calm-hero__scrim" aria-hidden="true"></div>
+    <figure class="hero__card calm-hero__card">
+      <img src="assets/kelley-headshot.jpg" alt="{NAME}, {TITLE_LINE}" width="1200" height="1200" fetchpriority="high">
+      <figcaption><span>{NAME}</span><span>REALTOR® · {TITLE_LINE} · {BROKER}</span></figcaption>
+    </figure>
+    <div class="calm-hero__copy">
+      <p class="hero__who">Fruita · Grand Junction · the Grand Valley</p>
+      <h1 class="sc-display">Real estate for the valley we call home.</h1>
+      <p class="hero__lede">Buying, selling, building and land, with a Colorado native who has lived here since 2008 and sold homes in every corner of it.</p>
+      <div class="hero__actions"><a class="cta cta--solid" href="contact.html">{CTA}</a><a class="cta" href="team.html">Meet Kelley</a></div>
     </div>
   </section>
 
-  <!-- 2 · THE PERSON: the frame holds, four lines cross, two photographs arrive -->
-  <section class="who" data-sc-act="pin" data-sc-span="2.8">
-    <div data-sc-stage>
-      <p class="who__kicker">Meet Kelley</p>
-      <div class="who__copy">
-        <p data-sc-cue="0 0.28 0">A Colorado native who has called the <em>Grand Valley</em> home since 2008.</p>
-        <p data-sc-cue="0.25 0.52">More than ten years in real estate: <em>new construction</em>, first homes, cabins on the Mesa, historic downtown.</p>
-        <p data-sc-cue="0.5 0.78">Before that, marketing and public relations. It shows in <em>how a home gets sold.</em></p>
-        <p data-sc-cue="0.75 1 0.25 0.15">Three boys, one dog, and a husband who <em>builds houses.</em></p>
+  <!-- 2 · THE PERSON -->
+  <section class="meet sc-section" data-sc-act="flow">
+    <div class="sc-wrap meet__grid">
+      <div class="meet__copy" data-sc-in data-sc-stagger="110">
+        <p class="meet__kicker">Meet Kelley</p>
+        <p>A Colorado native who has called the <em>Grand Valley</em> home since 2008.</p>
+        <p>More than ten years in real estate: <em>new construction</em>, first homes, cabins on the Mesa, historic downtown.</p>
+        <p>Before that, marketing and public relations. It shows in <em>how a home gets sold.</em></p>
+        <p>Three boys, one dog, and a husband who <em>builds houses.</em></p>
       </div>
-      <div class="who__pics">
-        <figure class="who__pic-a"><img src="assets/kelley-portrait.jpg" alt="Kelley Griffin smiling in a white blouse against a soft sandstone background" width="1600" height="1592" loading="eager"></figure>
-        <figure class="who__pic-b" data-sc-reveal="left" data-sc-reveal-at="0.48 0.86"><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1067" loading="eager"></figure>
+      <div class="meet__pics">
+        <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-portrait.jpg" alt="Kelley Griffin smiling in a white blouse against a soft sandstone background" width="1600" height="1592" loading="lazy"></figure>
+        <figure class="meet__pic-b" data-sc-in><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1067" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -321,42 +315,30 @@ def home_body():
         </div>
       </div>
       <ul class="ledger" data-sc-in data-sc-stagger="90">
-        <li><span class="ledger__n">16</span><span class="ledger__l">years calling the Grand Valley home, since the move from Fort Collins in 2008</span></li>
+        <li><span class="ledger__n">2008</span><span class="ledger__l">the year the family moved to the Grand Valley from Fort Collins, and it has been home ever since</span></li>
         <li><span class="ledger__n">10<small>+</small></span><span class="ledger__l">years licensed, from new builds and farmland to cabins on the Mesa and historic downtown</span></li>
         <li><span class="ledger__n">1</span><span class="ledger__l">general contractor in the family, so questions about lots, builders and timelines get real answers</span></li>
       </ul>
     </div>
   </section>
 
-  <!-- 4 · THE VALLEY TOUR: six places under your hand. The peak. -->
-  <section class="tour ground--dark" data-ground="dark" data-tour data-sc-act="scrub" data-sc-span="3.6">
-    <div data-sc-stage>
-      <img class="sc-stage__poster" src="assets/nbhd-loma.jpg" alt="" width="1600" height="1067" loading="lazy">
-      <video data-sc-scrub data-sc-src="motion/valley.mp4" data-sc-src-mobile="motion/valley-m.mp4" muted playsinline></video>
-      <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
-      <div class="tour__top" aria-hidden="true"></div>
-      <div class="tour__title" data-sc-cue="0 0.96 0">
+  <!-- 4 · SIX PLACES: the valley, west to east -->
+  <section class="places ground--dark" data-ground="dark" data-sc-act="flow">
+    <div class="sc-wrap">
+      <div class="places__head" data-sc-in>
         <h2 class="sc-display">Six places. One valley.</h2>
-        <p>West to east, the places Kelley helps people buy and sell. Scroll through them.</p>
-      </div>{places}
+        <p>West to east, the places Kelley helps people buy and sell.</p>
+      </div>
+      <div class="places__grid" data-sc-in data-sc-stagger="70">{placecards}
+      </div>
     </div>
   </section>
 
-  <!-- 5 · HOW SHE HELPS: the frame holds, three ways light in turn, the photograph changes -->
-  <section class="ways" data-sc-act="pin" data-sc-span="3.2">
-    <div data-sc-stage>
-      <div class="ways__grid">
-        <div class="ways__list">
-          <p class="ways__kicker">Three ways Kelley helps</p>
-          <a class="way" href="buyers-guide.html" style="--i:0"><span class="way__n">Buying</span><span class="way__t">First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.</span><span class="link">Buyer's guide</span></a>
-          <a class="way" href="sellers-guide.html" style="--i:1"><span class="way__n">Selling</span><span class="way__t">A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.</span><span class="link">Seller's guide</span></a>
-          <a class="way" href="contact.html" style="--i:2"><span class="way__n">Building and land</span><span class="way__t">New construction, vacant lots and farmland are a specialty. Dane's years as a residential general contractor mean the questions about lots, builders and timelines get real answers.</span><span class="link">Ask about a lot</span></a>
-        </div>
-        <div class="ways__pics">
-          <figure><img src="assets/svc-front-door.jpg" alt="A white home entrance with a wooden front door and hanging lantern" width="1600" height="2000" loading="lazy"></figure>
-          <figure data-sc-reveal="up" data-sc-reveal-at="0.3 0.5"><img src="assets/svc-kitchen.jpg" alt="A bright kitchen with a marble-topped wood island" width="1600" height="2000" loading="lazy"></figure>
-          <figure data-sc-reveal="up" data-sc-reveal-at="0.63 0.83"><img src="assets/listing-2521-woody-creek.jpg" alt="A vacant residential lot surrounded by homes with mountains in the distance" width="1600" height="1067" loading="lazy"></figure>
-        </div>
+  <!-- 5 · HOW SHE HELPS -->
+  <section class="helps sc-section" data-sc-act="flow">
+    <div class="sc-wrap">
+      <p class="meet__kicker" data-sc-in>Three ways Kelley helps</p>
+      <div class="helps__grid" data-sc-in data-sc-stagger="90">{rail}
       </div>
     </div>
   </section>
@@ -376,19 +358,17 @@ def home_body():
   </section>
 
   <!-- 7 · THE CLOSE -->
-  <section id="talk" class="close ground--dark" data-ground="dark" data-sc-act="pin" data-sc-span="1.15">
-    <div data-sc-stage data-sc-spotlight>
-      <div class="close__inner">
-        <h2 class="sc-display" data-sc-cue="0 1 0 0" data-sc-kinetic="lines">Let’s talk about your next move.</h2>
-        <div class="close__line" data-sc-cue="0 1 0 0">
-          <span><strong>{NAME}</strong>, REALTOR®, {TITLE_LINE}, {BROKER}</span>
-          <span>{ADDR1}, {CITY}</span>
-          <span>Mobile <a href="tel:{PHONE_TEL}">{PHONE}</a> · Office <a href="tel:{OFFICE_TEL}">{OFFICE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
-        </div>
-        <a class="cta cta--solid" href="contact.html" data-sc-magnet="0.26" data-sc-cue="0 1 0 0" data-sc-rise="0">{CTA}</a>
+  <section id="talk" class="close close--calm ground--dark" data-ground="dark" data-sc-act="flow">
+    <div class="close__inner" data-sc-in data-sc-stagger="90">
+      <h2 class="sc-display">Let’s talk about your next move.</h2>
+      <div class="close__line">
+        <span><strong>{NAME}</strong>, REALTOR®, {TITLE_LINE}, {BROKER}</span>
+        <span>{ADDR1}, {CITY}</span>
+        <span>Mobile <a href="tel:{PHONE_TEL}">{PHONE}</a> · Office <a href="tel:{OFFICE_TEL}">{OFFICE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
       </div>
-      <footer class="foot">{foot_inner()}</footer>
+      <a class="cta cta--solid" href="contact.html">{CTA}</a>
     </div>
+    <footer class="foot">{foot_inner()}</footer>
   </section>
 </main>
 {valley_rail(True)}

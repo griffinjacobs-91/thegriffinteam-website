@@ -32,29 +32,27 @@
     if (!drawn || !profileLen) return null;
     return drawn.getPointAtLength(Math.max(0, Math.min(1, frac)) * profileLen);
   }
-  function tourProgress() {
-    if (!tour) return 0;
-    var v = parseFloat(getComputedStyle(tour).getPropertyValue("--sc-p"));
-    return isNaN(v) ? 0 : v;
+  /* a place on the line lights up once its card in "Six places" has been seen; clicking it goes back there */
+  var seen = {};
+  function stampSeen() {
+    stops.forEach(function (s) { s.classList.toggle("is-stamped", reduce || !!seen[s.getAttribute("data-slug")]); });
   }
-  function stamp(stop, on) { stop.classList.toggle("is-stamped", on || reduce); }
+  if (stops.length && "IntersectionObserver" in window) {
+    var placeIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { seen[e.target.id.replace("place-", "")] = true; placeIO.unobserve(e.target); } });
+      stampSeen();
+    }, { threshold: 0.5 });
+    Array.prototype.forEach.call(document.querySelectorAll(".placecard[id]"), function (c) { placeIO.observe(c); });
+  } else { stops.forEach(function (s) { seen[s.getAttribute("data-slug")] = true; }); stampSeen(); }
 
-  var docFrac = 0;
   function drawValley() {
     if (!valley) return;
     var max = document.documentElement.scrollHeight - window.innerHeight;
-    docFrac = max > 0 ? window.scrollY / max : 0;
+    var docFrac = max > 0 ? window.scrollY / max : 0;
     if (drawn && profileLen) drawn.style.strokeDashoffset = String(profileLen * (1 - docFrac));
     var pt = pointAt(docFrac);
     if (head && pt) { head.setAttribute("cx", pt.x); head.setAttribute("cy", pt.y); }
     if (sun && pt) { sun.setAttribute("cx", pt.x); sun.setAttribute("cy", pt.y); }
-    var p = tourProgress();
-    var tr = tour ? tour.getBoundingClientRect() : null;
-    var past = tr ? tr.bottom < window.innerHeight * 0.5 : false;
-    stops.forEach(function (s) {
-      var at = parseFloat(s.getAttribute("data-at"));
-      stamp(s, past || (tr && tr.top < window.innerHeight && p >= at));
-    });
   }
   function sizeValleyTargets() {
     if (!valley) return;
@@ -72,14 +70,27 @@
   sizeValleyTargets(); window.addEventListener('resize', sizeValleyTargets);
   stops.forEach(function (s) {
     s.addEventListener("click", function () {
-      if (!tour) return;
-      var at = parseFloat(s.getAttribute("data-at"));
-      var top = tour.getBoundingClientRect().top + window.scrollY;
-      var travel = tour.offsetHeight - window.innerHeight;
-      window.scrollTo({ top: top + Math.max(0, travel) * at, behavior: reduce ? "auto" : "smooth" });
+      var card = document.getElementById("place-" + s.getAttribute("data-slug"));
+      if (card) card.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
     });
     s.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); s.click(); } });
   });
+
+  /* ---- hero film: a quiet loop, loaded after the page; skipped for reduced motion and data saver ---- */
+  var film = document.querySelector(".calm-hero__video");
+  var saveData = navigator.connection && navigator.connection.saveData;
+  if (film && !reduce && !saveData) {
+    var small = window.matchMedia("(max-width: 860px)").matches;
+    var startFilm = function () {
+      film.src = film.getAttribute(small ? "data-src-mobile" : "data-src");
+      film.addEventListener("playing", function () { film.classList.add("is-playing"); }, { once: true });
+      var pr = film.play(); if (pr && pr.catch) pr.catch(function () {});
+    };
+    if (document.readyState === "complete") startFilm(); else window.addEventListener("load", startFilm);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { es.forEach(function (e) { if (!film.src) return; if (e.isIntersecting) { var p = film.play(); if (p && p.catch) p.catch(function () {}); } else film.pause(); }); }).observe(film);
+    }
+  }
 
   var ticking = false;
   function onScroll() {
