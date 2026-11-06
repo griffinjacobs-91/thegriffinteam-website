@@ -5,6 +5,20 @@ Reads content/ (blog posts, client words, recent sales) and writes the finished 
 Internal links are written root-relative with clean URLs (/team, /blog/slug); Netlify serves them from team.html, blog/slug.html."""
 import os, re, html, pathlib, json, datetime
 
+def img_size(name):
+    """Real pixel size of a photo in site/assets, so the browser reserves the right shape."""
+    import struct
+    b = (pathlib.Path(__file__).resolve().parent.parent / "site" / "assets" / name).read_bytes()
+    if b[:8] == b"\x89PNG\r\n\x1a\n": return struct.unpack(">II", b[16:24])
+    i = 2
+    while i < len(b):
+        if b[i] != 0xFF: i += 1; continue
+        m = b[i + 1]
+        if m in (0xC0, 0xC1, 0xC2):
+            h, w = struct.unpack(">HH", b[i + 5:i + 9]); return w, h
+        i += 2 + struct.unpack(">H", b[i + 2:i + 4])[0]
+    return 1600, 1067
+
 SITE = os.environ.get("SITE", "https://thegriffinteam.com").rstrip("/")
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "site"
@@ -231,15 +245,15 @@ def write(path, html_text):
 # ---------------------------------------------------------------- home ----
 def home_body():
     ways = [
-      ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "sold-6.jpg", "A two-story white farmhouse-style home with a stone base and three garage doors on Woody Creek Drive in Grand Junction, sold by Kelley"),
-      ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "sold-1.jpg", "A white modern farmhouse with black trim and a black iron fence on Ouray Avenue in Grand Junction, sold by Kelley"),
-      ("Building and land", "New construction, vacant lots and farmland are a specialty. Dane's years as a residential general contractor mean the questions about lots, builders and timelines get real answers.", "contact.html", "Ask about a lot", "listing-2521-woody-creek.jpg", "A vacant residential lot surrounded by homes with mountains in the distance"),
+      ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "listing-353-belden.jpg", "A tan stucco home with a red tile roof, a green lawn and mature shade trees on Belden Avenue"),
+      ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "listing-2229-canyon-rim.jpg", "A white home on open land in the Redlands, with the red cliffs of the Colorado National Monument behind it"),
+      ("Building and land", "New construction, vacant lots and farmland are a specialty. Dane's years as a residential general contractor mean the questions about lots, builders and timelines get real answers.", "contact.html", "Ask about a lot", "listing-358-canyon-rim.jpg", "Aerial view of new homesites along a curving road in the Redlands, under the red cliffs of the Colorado National Monument"),
     ]
     rail = ""
     for i, (h, p, href, label, pic, alt) in enumerate(ways):
         rail += f"""
         <a class="help" href="{href}">
-          <div class="help__pic"><img src="assets/{pic}" alt="{esc(alt)}" width="1600" height="1067" loading="lazy"></div>
+          <div class="help__pic"><img src="assets/{pic}" alt="{esc(alt)}" width="1600" height="900" loading="lazy"></div>
           <h3>{h}</h3>
           <p>{p}</p>
           <span class="link">{label}</span>
@@ -247,10 +261,9 @@ def home_body():
     placecards = ""
     for p in PLACES:
         placecards += f"""
-        <a class="placecard" id="place-{p['slug']}" href="neighborhood-{p['slug']}.html">
-          <img src="assets/{p['photo']}" alt="{esc(p['alt'])}" width="1600" height="1067" loading="lazy">
-          <span class="placecard__text"><span class="placecard__elev">{esc(p['elev'])}</span><span class="placecard__name">{esc(p['name'])}</span><span class="placecard__line">{esc(p['line'])}</span></span>
-        </a>"""
+        <li><a class="placecard" id="place-{p['slug']}" href="neighborhood-{p['slug']}.html">
+          <span class="placecard__name">{esc(p['name'])}</span><span class="placecard__line">{esc(p['line'])}</span><span class="placecard__elev">{esc(p['elev'])}</span><span class="placecard__go" aria-hidden="true">&rarr;</span>
+        </a></li>"""
     big = REVIEWS[3][1]
     big_excerpt = "We probably walked through 50 homes with her, and not once did she show an ounce of frustration or impatience. Instead, she listened carefully, learned what really mattered to us, and ultimately found the perfect home for us."
     small = [(REVIEWS[0][0], REVIEWS[0][1]), (REVIEWS[1][0], REVIEWS[1][1]),
@@ -298,7 +311,7 @@ def home_body():
         <p>Three boys, one dog, and a husband who <em>builds houses.</em></p>
       </div>
       <div class="meet__pics">
-        <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-portrait.jpg" alt="Kelley Griffin smiling in a white blouse against a soft sandstone background" width="1600" height="1592" loading="lazy"></figure>
+        <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-dane.jpg" alt="Kelley and Dane Griffin smiling together, dressed up for an evening out" width="1200" height="1600" loading="lazy"></figure>
         <figure class="meet__pic-b" data-sc-in><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1926" loading="lazy"></figure>
       </div>
     </div>
@@ -329,7 +342,10 @@ def home_body():
         <h2 class="sc-display">Six places. One valley.</h2>
         <p>West to east, the places Kelley helps people buy and sell.</p>
       </div>
-      <div class="places__grid" data-sc-in data-sc-stagger="70">{placecards}
+      <div class="places__grid">
+        <figure class="places__pic" data-sc-in><img src="assets/valley-from-monument.jpg" alt="Independence Monument and the red canyons of the Colorado National Monument, with the Grand Valley spread out beyond" width="1600" height="1000" loading="lazy"></figure>
+        <ol class="places__list" data-sc-in data-sc-stagger="70">{placecards}
+        </ol>
       </div>
     </div>
   </section>
@@ -389,7 +405,7 @@ def page_shell(title, desc, path, hero_html, body_html, extra_head=""):
 
 def page_hero(label, h1, lede="", photo=None, alt=""):
     if photo:
-        return f"""<section class="page-hero page-hero--photo ground--dark" data-ground="dark"><img class="bg" src="assets/{photo}" alt="{esc(alt)}" width="1600" height="1067" fetchpriority="high"><div class="scrim" aria-hidden="true"></div>
+        return f"""<section class="page-hero page-hero--photo ground--dark" data-ground="dark"><img class="bg" src="assets/{photo}" alt="{esc(alt)}" width="{img_size(photo)[0]}" height="{img_size(photo)[1]}" fetchpriority="high"><div class="scrim" aria-hidden="true"></div>
   <div class="sc-wrap"><p class="sc-label">{esc(label)}</p><h1 class="sc-display">{h1}</h1>{f'<p class="sc-lede">{lede}</p>' if lede else ''}</div></section>"""
     return f"""<section class="page-hero"><div class="sc-wrap"><p class="sc-label">{esc(label)}</p><h1 class="sc-display">{h1}</h1>{f'<p class="sc-lede">{lede}</p>' if lede else ''}</div></section>"""
 
@@ -409,7 +425,7 @@ def build_team():
           "alumniOf": "Colorado State University", "knowsAbout": ["New construction", "First-time home buyers", "Vacant land", "Fruita, CO", "Grand Junction, CO"]}
     body = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/kelley-headshot.jpg" alt="Kelley Griffin smiling in a white shirt in front of red sandstone" width="1200" height="1200"></figure>
+  <figure data-sc-in><img src="assets/kelley-headshot-navy.jpg" alt="Kelley Griffin in a navy blazer, smiling outdoors" width="1500" height="1500"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Get to know me</h2>
     <p>Hello! We are so excited to meet you and help you through your next real estate transaction. We are locals who LOVE where we live. We love spending time outside, and when we are not working (or chasing kids) you'll find us on mountain bikes, skis, or hiking with our dog. We also have a passion for travel!</p>
@@ -433,7 +449,7 @@ def build_team():
   </div>
 </div></section>
 <section class="band"><div class="sc-wrap split" style="align-items:center">
-  <figure data-sc-in style="box-shadow:none"><img src="assets/griffin-family-terrace.jpg" alt="The Griffin family of five on a stone terrace overlooking a historic city" width="1600" height="1067" loading="lazy"></figure>
+  <figure data-sc-in style="box-shadow:none"><img src="assets/griffin-family-terrace.jpg" alt="The Griffin family of five on a stone terrace overlooking a historic city" width="1600" height="1200" loading="lazy"></figure>
   <div class="prose" data-sc-in><h2>The Griffin Team</h2><p>A small, hands-on team: Kelley on the real estate, Dane on the building side when a lot, a plan or a timeline needs a contractor's eye. With our clients from start to finish. No handoffs, no confusion, just clear communication and a seamless experience every step of the way.</p><a class="link" href="testimonials.html">What clients say</a></div>
 </div></section>
 {cta_band()}"""
@@ -444,7 +460,7 @@ def build_team():
 def build_guides():
     bbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/sold-4.jpg" alt="A single-story stucco home with stone accents and a desert-landscaped yard on Aiguille Drive in the Redlands, sold by Kelley" width="1600" height="1066" loading="lazy"></figure>
+  <figure data-sc-in><img src="assets/listing-2521-woody-creek.jpg" alt="Aerial view of a new-home neighborhood in Grand Junction, with an open homesite in front and the Book Cliffs on the horizon" width="1024" height="682" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to buy?</h2>
     <p>Buying a home is exciting! But it can also be stressful and time consuming. We will use your "wants and needs" list to help you sort through available listings, set up and attend showings, and provide you with relevant information about the different properties. We will continue this process until you find "the one". At this point we will help with all of the contracts and paperwork necessary to complete the transaction.</p>
@@ -458,10 +474,10 @@ def build_guides():
 <div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>After signing the final paperwork to complete the purchase, you are now the owner of a new house. It may take a few days for your loan to be funded once the paperwork has been returned to the lender, but once that check is delivered to the seller, you’ll be all set to move into the home of your dreams.</p></div></div></section>
 {cta_band("Our goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
     write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "A step-by-step buyer's guide from Kelley Griffin, Coldwell Banker Distinctive Properties: research, budget, pre-approval, showings, offers, inspection, loan, appraisal and closing in Fruita and Grand Junction.", "buyers-guide.html",
-        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="sold-6.jpg", alt="A two-story white home with a stone base on Woody Creek Drive in Grand Junction, sold by Kelley"), bbody))
+        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-desert-aerial.jpg", alt="Aerial view of desert singletrack winding across the mesas outside Fruita"), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/sold-1.jpg" alt="A white modern farmhouse with black trim on Ouray Avenue in Grand Junction, sold by Kelley" width="1600" height="1066" loading="lazy"></figure>
+  <figure data-sc-in><img src="assets/kelley-dane-selfie.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a sunny mountain trail" width="1200" height="1600" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to sell?</h2>
     <p>There are many reasons you may be considering selling your home. Maybe it is time to find a larger home, downsize as kids move away, or move for a new job. For many sellers, the decision to sell often comes down to what their home is worth. Values are constantly changing, but we can provide you with a current market analysis (CMA) so that you can see your home's value in today's market.</p>
@@ -474,21 +490,21 @@ def build_guides():
 <div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>Once you have sold your home, you’re free to take the next step on your journey. Whether this is relocating to a new city, moving into a larger home, or downsizing and enjoying your life as empty-nesters, knowing all your selling responsibilities have been taken care of will help you achieve peace of mind for your new path.</p></div></div></section>
 {cta_band("Know what your home is worth.", "A current market analysis, at no cost, from someone who has sold homes in every corner of the valley.")}"""
     write("sellers-guide.html", page_shell(f"Seller's Guide to Selling Your Home | {TEAM}", "A step-by-step seller's guide from Kelley Griffin, Coldwell Banker Distinctive Properties: pricing, preparation, marketing, offers and closing, plus a free current market analysis for Grand Valley homes.", "sellers-guide.html",
-        page_hero("Selling", "Comprehensive seller's guide", "Pricing, preparation, marketing and closing, with a free market analysis to start.", photo="sold-1.jpg", alt="A white modern farmhouse on Ouray Avenue in Grand Junction, sold by Kelley"), sbody))
+        page_hero("Selling", "Comprehensive seller's guide", "Pricing, preparation, marketing and closing, with a free market analysis to start.", photo="mesa-fall-overlook.jpg", alt="Golden aspens and dark spruce on the Grand Mesa in fall, with a lake far below"), sbody))
 
 def build_neighborhoods():
     cards = ""
-    for p in PLACES:
-        cards += f'<a class="card" href="neighborhood-{p["slug"]}.html" data-sc-in><div class="card__pic"><img src="assets/{p["photo"]}" alt="{esc(p["alt"])}" width="1600" height="1067" loading="lazy"></div><h3>{esc(p["name"])}</h3><p>{esc(p["line"])}</p><span class="sc-label">{esc(p["elev"])}</span></a>'
+    for i, p in enumerate(PLACES, 1):
+        cards += f'<a class="card card--type" href="neighborhood-{p["slug"]}.html" data-sc-in><span class="card__n">{i:02d}</span><h3>{esc(p["name"])}</h3><p>{esc(p["blurb"])}</p><span class="sc-label">{esc(p["elev"])}</span><span class="link">Explore {esc(p["name"].replace("The ", "the "))}</span></a>'
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="cards" data-sc-stagger="70" data-sc-in>{cards}</div></div></section>{cta_band("Which one is yours?", "Tell Kelley how you want to live and she will tell you where in the valley that happens.")}"""
     write("neighborhoods.html", page_shell(f"Grand Valley Neighborhoods: Fruita, Redlands, Grand Junction, Loma, Palisade, Grand Mesa | {TEAM}", "Kelley Griffin's lifestyle guides to the Grand Valley: Fruita, the Redlands, Grand Junction, Loma, Palisade and the Grand Mesa. Recreation, amenities, attractions and why people love each one.", "neighborhoods.html",
-        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="nbhd-grand-junction.jpg", alt="The Colorado River winding through green orchards and fields below sunlit desert mesas"), body))
+        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="mesa-view-bookcliffs.jpg", alt="Looking down from the Grand Mesa across the valley to the Book Cliffs on a winter afternoon"), body))
     for i, p in enumerate(PLACES):
         prev_ = PLACES[i-1] if i > 0 else PLACES[-1]; next_ = PLACES[(i+1) % len(PLACES)]
         def ul(items): return "<ul>" + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
         nm = p['name'].replace('The ', 'the ')
         facet = lambda h, items: f'<div class="facet"><h3>{h}</h3>{ul(items)}</div>'
-        nav = "".join(f'<a class="nbnav" href="neighborhood-{q["slug"]}.html"><img src="assets/{q["photo"]}" alt="" width="1600" height="1067" loading="lazy"><span class="nbnav__k">{k}</span><span class="nbnav__n">{esc(q["name"])}</span></a>' for k, q in (("Previous", prev_), ("Next", next_)))
+        nav = "".join(f'<a class="nbnav" href="neighborhood-{q["slug"]}.html"><span class="nbnav__k">{k}</span><span class="nbnav__n">{esc(q["name"])}</span></a>' for k, q in (("Previous", prev_), ("Next", next_)))
         body = f"""
 <section class="sc-section nb-intro"><div class="sc-wrap nb-intro__grid">
   <div data-sc-in><p class="sc-label">Welcome to {esc(nm)}</p><p class="nb-intro__lede">{esc(p['blurb'])}</p></div>
@@ -505,13 +521,13 @@ def build_testimonials():
     items = "".join(f'<blockquote class="tcard" data-sc-in><p>{esc(t)}</p><footer>{esc(n)}</footer></blockquote>' for n, t in REVIEWS)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="tcards">{items}</div></div></section>{cta_band()}"""
     write("testimonials.html", page_shell(f"Client Testimonials | {NAME}, {TEAM}", "What clients say about working with Kelley Griffin, Coldwell Banker Distinctive Properties, in Fruita and Grand Junction, Colorado.", "testimonials.html",
-        page_hero("Client words", "What our clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="nbhd-palisade.jpg", alt="Palisade landscape with a turquoise river below orange cliffs"), body))
+        page_hero("Client words", "What our clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-lake-sunset.jpg", alt="A lake on the Grand Mesa reflecting a pink and gold sunset"), body))
 
 def build_sold():
-    items = "".join(f'<div class="sale" data-sc-in><div class="sale__pic"><img src="assets/{pic}" alt="{esc(addr)}" width="1600" height="1067" loading="lazy"></div><div class="sale__price">{price}</div><div class="sale__addr">{esc(addr)}</div><div class="sale__meta">Sold · {esc(meta)}</div></div>' for price, addr, meta, pic in SOLD)
+    items = "".join(f'<div class="sale" data-sc-in><div class="sale__pic"><img src="assets/{pic}" alt="{esc(addr)}" width="{img_size(pic)[0]}" height="{img_size(pic)[1]}" loading="lazy"></div><div class="sale__price">{price}</div><div class="sale__addr">{esc(addr)}</div><div class="sale__meta">Sold · {esc(meta)}</div></div>' for price, addr, meta, pic in SOLD)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="sales" data-sc-stagger="60" data-sc-in>{items}</div><p class="form__note" style="margin-top:3rem">A selection of past transactions. Property information is derived from county records and the Multiple Listing Service and may include approximations; verify independently.</p></div></section>{cta_band("Know what your home is worth.", "A current market analysis, at no cost.")}"""
     write("sold.html", page_shell(f"Recent Sales in Fruita and Grand Junction | {TEAM}", "A selection of homes and land Kelley Griffin has sold across Fruita and Grand Junction, Colorado.", "sold.html",
-        page_hero("Recent sales", "Past transactions", "Homes, lots and a commercial building, across the valley.", photo="sold-8.jpg", alt="A modern two-story home on Lime Creek Road in Grand Junction, sold by Kelley"), body))
+        page_hero("Recent sales", "Past transactions", "Homes, lots and a commercial building, across the valley.", photo="mesa-lake-evening.jpg", alt="Evening sun over a calm lake on the Grand Mesa, with people fishing from the shore"), body))
 
 def build_contact():
     body = f"""
@@ -541,7 +557,7 @@ def build_contact():
       <li><span>Address</span><span>{BROKER}<br>{ADDR1}<br>{CITY}</span></li>
     </ul>
     <div style="margin-top:2rem">{marks_row()}</div>
-    <figure style="margin:2.5rem 0 0"><img src="assets/griffin-family-garden.jpg" alt="The Griffin family of five in a garden among pink flowers" width="1600" height="1926" loading="lazy" style="width:100%;height:auto;display:block"></figure>
+    <figure style="margin:2.5rem 0 0"><img src="assets/kelley-dane-mesa-lake.jpg" alt="Kelley and Dane Griffin on the rocky shore of a lake on the Grand Mesa" width="1200" height="1600" loading="lazy" style="width:100%;height:auto;display:block"></figure>
   </div>
 </div></section>"""
     write("contact.html", page_shell(f"Contact Kelley Griffin | {TEAM}, {BROKER}", f"Reach Kelley Griffin, Broker Associate with {BROKER}, at {PHONE} or {EMAIL}. Office at {ADDR1}, {CITY}.", "contact.html",
@@ -630,8 +646,8 @@ def load_posts():
         if meta.get("draft", "").lower() in ("yes", "true"): continue
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", meta["slug"]): raise SystemExit(f"{f.name}: slug must be lowercase words joined by hyphens")
         meta["when"] = datetime.date.fromisoformat(meta["date"])
-        photo = meta.get("photo") or "nbhd-grand-junction.jpg"
-        if not (OUT / "assets" / photo).exists(): raise SystemExit(f"{f.name}: photo site/assets/{photo} not found")
+        photo = meta.get("photo") or None
+        if photo and not (OUT / "assets" / photo).exists(): raise SystemExit(f"{f.name}: photo site/assets/{photo} not found")
         meta["photo"] = photo
         meta["body"] = m.group(2) if f.suffix == ".html" else md_to_html(m.group(2))
         posts.append(meta)
@@ -648,7 +664,7 @@ def build_blog(posts):
         others = [q for q in posts if q is not p][:3] if i < 3 else posts[:3]
         more = "".join(f'<li><a href="blog/{q["slug"]}.html">{esc(q["title"])}</a><span>{nice_date(q["when"])}</span></li>' for q in others)
         ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["title"], "description": p["description"],
-              "datePublished": p["date"], "dateModified": p.get("updated", p["date"]), "url": canon(path), "image": f"{SITE}/assets/{p['photo']}",
+              "datePublished": p["date"], "dateModified": p.get("updated", p["date"]), "url": canon(path), "image": f"{SITE}/assets/{p['photo'] or 'kelley-headshot.jpg'}",
               "author": {"@type": "Person", "name": NAME, "url": canon("team.html")},
               "publisher": {"@type": "Organization", "name": TEAM, "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/logo-cb-griffin-team.png"}}}
         body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><article class="prose post" data-sc-in>
@@ -660,7 +676,11 @@ def build_blog(posts):
         write(path, page_shell(f"{p['title']} | {TEAM}", p["description"], path,
             page_hero("Blog", esc(p["title"]), "", p["photo"], p.get("photo_alt", "")), body,
             extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'))
-    feat = "".join(f'<li><a class="pcard" href="blog/{p["slug"]}.html"><span class="pcard__pic"><img src="assets/{p["photo"]}" alt="" width="1600" height="1067" loading="lazy"></span><span class="pcard__date">{nice_date(p["when"])}</span><span class="pcard__title">{esc(p["title"])}</span><span class="pcard__desc">{esc(p["description"])}</span></a></li>' for p in posts[:3])
+    def pic(p):
+        if not p["photo"]: return '<span class="pcard__rule" aria-hidden="true"></span>'
+        w, h = img_size(p["photo"])
+        return f'<span class="pcard__pic"><img src="assets/{p["photo"]}" alt="" width="{w}" height="{h}" loading="lazy"></span>'
+    feat = "".join(f'<li><a class="pcard" href="blog/{p["slug"]}.html">{pic(p)}<span class="pcard__date">{nice_date(p["when"])}</span><span class="pcard__title">{esc(p["title"])}</span><span class="pcard__desc">{esc(p["description"])}</span></a></li>' for p in posts[:3])
     rows, year = "", None
     for p in posts[3:]:
         if p["when"].year != year:
@@ -670,7 +690,7 @@ def build_blog(posts):
     rows = f'<p class="sc-label blog-index__k">Latest</p><ul class="pcards">{feat}</ul>' + rows[len("</ul>"):] + "</ul>"
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="blog-index">{rows}</div></div></section>{cta_band()}"""
     write("blog/index.html", page_shell(f"Blog | {NAME}, {TEAM}", "Kelley Griffin on buying, selling and living in Fruita, Grand Junction, the Redlands and the Grand Mesa.", "blog/index.html",
-        page_hero("Blog", "Notes from the valley", "Market updates, neighborhood guides and family stories from Fruita, Grand Junction, the Redlands and the Grand Mesa.", photo="nbhd-redlands.jpg", alt="A pond reflecting autumn trees and red rock mesas in the Redlands"), body))
+        page_hero("Blog", "Notes from the valley", "Market updates, neighborhood guides and family stories from Fruita, Grand Junction, the Redlands and the Grand Mesa.", photo="kelley-biking.jpg", alt="Kelley Griffin mountain biking on rocky desert singletrack under a sandstone overhang"), body))
     return [f"blog/{p['slug']}.html" for p in posts]
 
 # ------------------------------------------------------------------ run ----
