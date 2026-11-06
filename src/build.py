@@ -299,7 +299,7 @@ def home_body():
       </div>
       <div class="meet__pics">
         <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-portrait.jpg" alt="Kelley Griffin smiling in a white blouse against a soft sandstone background" width="1600" height="1592" loading="lazy"></figure>
-        <figure class="meet__pic-b" data-sc-in><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1067" loading="lazy"></figure>
+        <figure class="meet__pic-b" data-sc-in><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1926" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -545,7 +545,7 @@ def build_contact():
       <li><span>Address</span><span>{BROKER}<br>{ADDR1}<br>{CITY}</span></li>
     </ul>
     <div style="margin-top:2rem">{marks_row()}</div>
-    <figure style="margin:2.5rem 0 0"><img src="assets/griffin-family-garden.jpg" alt="The Griffin family of five in a garden among pink flowers" width="1600" height="1067" loading="lazy" style="width:100%;height:auto;display:block"></figure>
+    <figure style="margin:2.5rem 0 0"><img src="assets/griffin-family-garden.jpg" alt="The Griffin family of five in a garden among pink flowers" width="1600" height="1926" loading="lazy" style="width:100%;height:auto;display:block"></figure>
   </div>
 </div></section>"""
     write("contact.html", page_shell(f"Contact Kelley Griffin | {TEAM}, {BROKER}", f"Reach Kelley Griffin, Broker Associate with {BROKER}, at {PHONE} or {EMAIL}. Office at {ADDR1}, {CITY}.", "contact.html",
