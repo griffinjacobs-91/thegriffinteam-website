@@ -640,3 +640,45 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .tcard footer { margin-top: var(--sc-5); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gt-gold-deep); font-weight: 500; }
 .calm-hero .hero__who { background: none; padding: 0 0 0 2.6rem; position: relative; color: #ECE4D2; }
 .calm-hero .hero__who::before { content: ""; position: absolute; left: 0; top: 50%; width: 1.8rem; height: 1px; background: var(--gt-gold); }
+
+/* ---------- Photo variety pass: one photo per spot ---------- */
+.places__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 4vw, 4.5rem); align-items: stretch; }
+.places__pic { margin: 0; overflow: hidden; min-height: 26rem; box-shadow: var(--sc-e3); }
+.places__pic img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; display: block; }
+.places__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(243,240,233,0.18); }
+.places__list li { border-bottom: 1px solid rgba(243,240,233,0.18); }
+.placecard { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name go" "line go" "elev go"; column-gap: var(--sc-4); row-gap: 0.25rem; aspect-ratio: auto; padding: 1.15rem 0.25rem; background: none; overflow: visible; }
+.placecard::after { content: none; }
+.placecard__name { grid-area: name; font-size: clamp(1.45rem, 1.1rem + 0.9vw, 2rem); color: #F8F5EE; transition: color 300ms; }
+.placecard__line { grid-area: line; }
+.placecard__elev { grid-area: elev; margin-top: 0.2rem; }
+.placecard__go { grid-area: go; align-self: center; color: var(--gt-gold); font-size: 1.3rem; transition: transform 400ms var(--sc-ease-out); }
+.placecard:hover .placecard__name, .placecard:focus-visible .placecard__name { color: var(--gt-gold); }
+.placecard:hover .placecard__go, .placecard:focus-visible .placecard__go { transform: translateX(6px); }
+@media (max-width: 1000px) { .places__grid { grid-template-columns: 1fr; } .places__pic { min-height: 0; aspect-ratio: 16 / 10; } }
+@media (max-width: 600px) { .places__grid { grid-template-columns: 1fr; } .placecard { aspect-ratio: auto; } }
+
+.help__pic img { object-position: 50% 60%; }
+
+.card--type { position: relative; display: grid; gap: 0.6rem; align-content: start; padding: var(--sc-6) var(--sc-5) var(--sc-5); background: #fff; border-top: 2px solid var(--gt-gold); box-shadow: var(--sc-e1); transition: box-shadow 400ms, transform 400ms var(--sc-ease-out); }
+.card--type:hover, .card--type:focus-visible { box-shadow: var(--sc-e2); transform: translateY(-3px); }
+.card__n { font-family: var(--sc-font-display); font-size: 2.6rem; line-height: 1; color: var(--gt-gold-deep); opacity: 0.55; }
+.card--type h3 { margin: 0; }
+.card--type p { margin: 0; }
+.card--type .sc-label { margin-top: 0.4rem; }
+.card--type .link { margin-top: 0.4rem; justify-self: start; }
+
+.nbnav { min-height: 0; padding: var(--sc-6) var(--sc-5); border-top: 2px solid var(--gt-gold); transition: background 300ms; }
+.nbnav::after { content: none; }
+.nbnav:hover, .nbnav:focus-visible { background: #141B3D; }
+@media (max-width: 860px) { .nbnav { min-height: 0; padding: var(--sc-5) var(--sc-4); } }
+
+.pcard__rule { display: block; height: 2px; width: 3rem; background: var(--gt-gold); margin: 0.2rem 0 0.6rem; }
+.pcards:not(:has(.pcard__pic)) .pcard { padding: var(--sc-6) var(--sc-5); background: #fff; box-shadow: var(--sc-e1); }
+
+.meet__pic-a img { object-position: 50% 25%; }
+.page-hero--photo .bg { object-position: var(--pos, 50% 50%); }
+.page-hero--photo .bg[src$="mesa-view-bookcliffs.jpg"] { object-position: 50% 38%; }
+.page-hero--photo .bg[src$="mesa-fall-overlook.jpg"] { object-position: 50% 62%; }
+.page-hero--photo .bg[src$="kelley-biking.jpg"] { object-position: 55% 60%; }
+.page-hero--photo .bg[src$="mesa-lake-sunset.jpg"] { object-position: 50% 55%; }
