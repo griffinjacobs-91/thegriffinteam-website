@@ -452,6 +452,21 @@ def build_team():
   <figure data-sc-in style="box-shadow:none"><img src="assets/griffin-family-terrace.jpg" alt="The Griffin family of five on a stone terrace overlooking a historic city" width="1600" height="1200" loading="lazy"></figure>
   <div class="prose" data-sc-in><h2>The Griffin Team</h2><p>A small, hands-on team: Kelley on the real estate, Dane on the building side when a lot, a plan or a timeline needs a contractor's eye. With our clients from start to finish. No handoffs, no confusion, just clear communication and a seamless experience every step of the way.</p><a class="link" href="testimonials.html">What clients say</a></div>
 </div></section>
+<section class="sc-section"><div class="sc-wrap split dane" style="align-items:center">
+  <div class="prose" data-sc-in><p class="sc-label">The building side</p><h2>Dane Griffin</h2><p>Dane owns Griffin Design and Construction, LLC and builds residential homes. When a client is weighing a lot, a floor plan or a builder's timeline, he is the contractor's eye on the team, so the questions about land, builders and schedules get real answers.</p><a class="link" href="contact.html">Ask about building</a></div>
+  <figure class="dane__pic" data-sc-in><img src="assets/dane-headshot.jpg" alt="Dane Griffin, smiling outdoors beside a tree in a light button-down shirt" width="1200" height="1800" loading="lazy"></figure>
+</div>
+<div class="sc-wrap"><div class="photo-row photo-row--lead" data-sc-in>
+  <figure style="--ar:1.333"><img src="assets/build-framing.jpg" alt="A two-story home under construction, wrapped in house wrap with its stucco half finished" width="1600" height="1200" loading="lazy"></figure>
+  <figure style="--ar:0.75"><img src="assets/build-young-crew.jpg" alt="Two young boys in hoodies hammering nails into a new wood subfloor" width="1200" height="1600" loading="lazy"></figure>
+  <figure style="--ar:0.75"><img src="assets/build-finished-interior.jpg" alt="A finished open living room and kitchen in a Griffin Design and Construction home, with dark cabinets, a linear fireplace and wood floors" width="1200" height="1600" loading="lazy"></figure>
+</div><p class="photo-row__cap" data-sc-in>From framing to finish, with help from the youngest members of the crew.</p></div></section>
+<section class="band"><div class="sc-wrap"><div class="prose" style="max-width:40rem;margin-inline:auto;text-align:center" data-sc-in><p class="sc-label">Off the clock</p><h2>Bikes, skis and a passport</h2></div>
+<div class="photo-row photo-row--life" data-sc-in>
+  <figure style="--ar:0.75"><img src="assets/kelley-biking-fruita.jpg" alt="Kelley Griffin in a bike helmet and sunglasses, smiling on a rocky ridge high above the Colorado River near Fruita" width="1200" height="1600" loading="lazy"></figure>
+  <figure style="--ar:1.333"><img src="assets/powderhorn-ski-day.jpg" alt="Young skiers and snowboarders lined up by the trail map at Powderhorn among bare aspens" width="1600" height="1200" loading="lazy"></figure>
+  <figure style="--ar:0.75"><img src="assets/kelley-dane-japan.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a narrow lantern-lined street abroad" width="1200" height="1600" loading="lazy"></figure>
+</div></div></section>
 {cta_band()}"""
     write("team.html", page_shell(f"Meet Kelley Griffin | {TEAM}, {BROKER}", f"Kelley Griffin is a Broker Associate with {BROKER} in Grand Junction, Colorado: a Colorado native, in the Grand Valley since 2008, more than 10 years in real estate, specializing in new construction and first-time buyers.", "team.html",
         page_hero("Meet Kelley", f"{NAME}", f"REALTOR®, {TITLE_LINE}, {BROKER}. Fruita, Grand Junction and the Grand Valley."), body,

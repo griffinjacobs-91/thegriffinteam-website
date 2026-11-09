@@ -682,3 +682,19 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .page-hero--photo .bg[src$="mesa-fall-overlook.jpg"] { object-position: 50% 62%; }
 .page-hero--photo .bg[src$="kelley-biking.jpg"] { object-position: 55% 60%; }
 .page-hero--photo .bg[src$="mesa-lake-sunset.jpg"] { object-position: 50% 55%; }
+
+/* ---------- New photos, 9 Nov: Dane, the build and off-the-clock rows ---------- */
+.dane__pic { max-width: 26rem; justify-self: center; width: 100%; }
+.photo-row { display: flex; gap: var(--sc-4); margin-top: var(--sc-8); }
+.photo-row figure { flex: var(--ar, 1) 1 0; margin: 0; min-width: 0; overflow: hidden; box-shadow: var(--sc-e2); border-radius: 2px; }
+.photo-row img { width: 100%; height: auto; display: block; }
+.photo-row--life { max-width: 64rem; margin-inline: auto; margin-top: var(--sc-6); }
+.photo-row__cap { margin-top: var(--sc-4); color: var(--sc-ink-soft); font-size: 0.85rem; text-align: center; }
+@media (max-width: 600px) {
+  .photo-row { gap: var(--sc-3); }
+  .photo-row--lead { flex-wrap: wrap; }
+  .photo-row--lead figure:first-child { flex-basis: 100%; }
+}
+@media (max-width: 600px) { .photo-row--life { flex-wrap: wrap; } .photo-row--life figure:nth-child(2) { flex-basis: 100%; order: -1; } }
+.dane .prose .sc-label + h2 { margin-top: var(--sc-3); }
+@media (max-width: 860px) { .dane__pic { max-width: 20rem; } }
