@@ -29,7 +29,8 @@
   }
 
   var heads = $$("main h1.sc-display, main h2.sc-display");
-  heads.forEach(function (h) { split(h, "mo-wi", true); });
+  /* screen readers get the heading as one phrase, not word by word */
+  heads.forEach(function (h) { h.setAttribute("aria-label", h.textContent.replace(/\s+/g, " ").trim()); split(h, "mo-wi", true); });
   var quotes = $$(".quote--big p");
   quotes.forEach(function (q) { split(q, "mo-rw", false); });
 
