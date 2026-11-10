@@ -1,0 +1,77 @@
+/* ================================================================
+   The Griffin Team · motion layer (Nov 2026)
+   Calm, premium, and always in service of the content:
+   - headlines rise into place word by word as they arrive
+   - photos unveil from below, then drift gently as the page scrolls
+   - banner photos sink slower than the page (depth)
+   - cards lean toward the cursor with a soft light; buttons lean in
+   - pages cross-fade instead of blinking
+   Everything here is off under prefers-reduced-motion, and the page
+   reads perfectly if this file or motion.js never loads.
+   ================================================================ */
+
+:root { --mo-ease: cubic-bezier(0.16, 1, 0.3, 1); }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- headlines: each word rises out of its own line mask ---- */
+  .mo-w { display: inline-block; overflow: clip; overflow-clip-margin: 0.08em; vertical-align: top; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+  .mo-wi { display: inline-block; translate: 0 112%; transition: translate 1000ms var(--mo-ease); transition-delay: calc(min(var(--i, 0), 14) * 55ms + var(--mo-d, 0ms)); }
+  .mo-in .mo-wi { translate: 0 0; }
+  .calm-hero h1.mo-split { animation: none; }
+  .calm-hero h1 { --mo-d: 260ms; }
+
+  /* ---- the big client quote reads itself in ---- */
+  .mo-rw { opacity: 0.16; transition: opacity 600ms ease; transition-delay: calc(var(--i, 0) * 28ms); }
+  .mo-in .mo-rw { opacity: 1; }
+
+  /* ---- photos: a curtain lifts, the photo settles ---- */
+  /* the clip sits on the photo, not its frame, so the frame stays observable */
+  .mo-pic > img, .mo-pic > picture > img { clip-path: inset(100% 0 0 0); transition: clip-path 1300ms var(--mo-ease); }
+  .mo-pic.mo-in > img, .mo-pic.mo-in > picture > img { clip-path: inset(0); }
+  .mo-zoom > img, .mo-zoom > picture > img { scale: 1.16; transition: clip-path 1300ms var(--mo-ease), scale 1700ms var(--mo-ease), transform 900ms var(--sc-ease-out); }
+  .mo-zoom.mo-in > img, .mo-zoom.mo-in > picture > img { scale: 1; }
+
+  /* ---- scroll depth, run by the browser's compositor (smooth, no scroll listeners) ---- */
+  @supports (animation-timeline: view()) {
+    .mo-zoom.mo-in > img, .mo-zoom.mo-in > picture > img { scale: 1.1; }
+    .mo-zoom > img, .mo-zoom > picture > img { animation: mo-drift linear both; animation-timeline: view(); }
+    @keyframes mo-drift { from { translate: 0 -4.5%; } to { translate: 0 4.5%; } }
+
+    /* banner photos sink at a third of the page's speed */
+    .page-hero--photo img.bg { animation: hero-settle 1600ms var(--sc-ease-out) both, mo-sink linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
+    .calm-hero__media { animation: mo-sink linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    @keyframes mo-sink { from { translate: 0 0; } to { translate: 0 30%; } }
+
+    /* hero words drift up and soften as you leave */
+    .page-hero--photo .sc-wrap, .calm-hero__copy { animation: mo-leave linear both; animation-timeline: scroll(root); animation-range: 0 85vh; }
+    @keyframes mo-leave { to { translate: 0 -8vh; opacity: 0.15; } }
+  }
+
+  /* ---- cards lean toward the cursor, with a soft light under it ---- */
+  .mo-tilt { transition: rotate 500ms var(--mo-ease); position: relative; }
+  .mo-sheen { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; z-index: 3; opacity: 0; transition: opacity 400ms ease;
+    background: radial-gradient(28rem circle at var(--mx, 50%) var(--my, 50%), rgba(255, 246, 228, 0.16), transparent 55%); mix-blend-mode: soft-light; }
+  .mo-tilt:hover .mo-sheen { opacity: 1; }
+  .mo-tilt.is-tilting { transition: none; }
+
+  /* ---- buttons lean toward the cursor and press in ---- */
+  .cta { transition-property: background-color, color, border-color, transform, translate; translate: var(--tx, 0) var(--ty, 0); }
+  .cta:active { transform: scale(0.97); }
+  .cta.is-magnet { transition-duration: 160ms, 160ms, 160ms, 120ms, 90ms; }
+
+  /* ---- text links: the underline draws across on hover ---- */
+  .link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: border-color 160ms var(--sc-ease-out), background-size 450ms var(--mo-ease); }
+  .link:hover, .link:focus-visible { background-size: 100% 1px; }
+
+  /* ---- page to page: a quick cross-fade, the top bar stays put ---- */
+  @view-transition { navigation: auto; }
+  .bar { view-transition-name: bar; }
+  ::view-transition-old(root) { animation: 260ms ease both mo-fade-out; }
+  ::view-transition-new(root) { animation: 420ms var(--mo-ease) both mo-fade-in; }
+  @keyframes mo-fade-out { to { opacity: 0; } }
+  @keyframes mo-fade-in { from { opacity: 0; translate: 0 10px; } }
+}
+
+/* phones and tablets: keep the reveals, drop pointer-only effects */
+@media (hover: none), (pointer: coarse) { .mo-sheen { display: none; } }
