@@ -134,6 +134,9 @@ def marks_row(light=False):
 
 # -------------------------------------------------------------- helpers ----
 NUMBER_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve"}
+CB_PROFILE = "https://www.coldwellbanker.com/co/grand-junction/agents/kelley-griffin/aid-P0020000000003HOyAiz5CgnHzzCekQo3EmnDn6e"
+BROKER_URL = "https://www.cbdistinctive.com/"
+
 def esc(s): return html.escape(s, quote=True)
 def clean(path):
     """team.html -> /team, blog/index.html -> /blog, index.html -> /"""
@@ -162,6 +165,10 @@ def head(title, desc, path, og="assets/kelley-headshot.jpg", extra=""):
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:image" content="{SITE}/{og}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{canon(path)}">
+<meta property="og:site_name" content="{TEAM}">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#012169">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23012169'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23CCB091'%3EKG%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -258,6 +265,9 @@ def add_srcset(text):
 def write(path, html_text):
     out = OUT / path
     out.parent.mkdir(parents=True, exist_ok=True)
+    hero = re.search(r'<img class="bg" src="assets/([^"]+)"|class="page-hero__pic"><img src="assets/([^"]+)"', html_text)
+    if hero:  # share previews show the page's own photo, not the headshot
+        html_text = re.sub(r'(<meta property="og:image" content=")[^"]*"', lambda m: m.group(1) + f'{SITE}/assets/{hero.group(1) or hero.group(2)}"', html_text, count=1)
     out.write_text(absolutize(add_srcset(html_text)), encoding="utf-8")
 
 # ---------------------------------------------------------------- home ----
@@ -293,7 +303,7 @@ def home_body():
       "image": f"{SITE}/assets/kelley-headshot.jpg", "telephone": PHONE_TEL, "email": EMAIL,
       "address": {"@type": "PostalAddress", "streetAddress": ADDR1, "addressLocality": "Grand Junction", "addressRegion": "CO", "postalCode": "81501", "addressCountry": "US"},
       "areaServed": ["Fruita, CO", "Loma, CO", "Redlands, Grand Junction, CO", "Grand Junction, CO", "Palisade, CO", "Grand Mesa, CO"],
-      "memberOf": {"@type": "Organization", "name": BROKER},
+      "memberOf": {"@type": "Organization", "name": BROKER, "url": BROKER_URL}, "logo": f"{SITE}/assets/logo-cb-griffin-team.png", "sameAs": [CB_PROFILE],
       "employee": {"@type": "Person", "name": NAME, "jobTitle": f"{TITLE_LINE}, {BROKER}", "telephone": PHONE_TEL, "email": EMAIL, "url": canon("team.html")},
       "knowsAbout": ["New construction", "First-time home buyers", "Vacant land", "Residential real estate in the Grand Valley"],
     }
@@ -445,9 +455,9 @@ def steps_html(steps):
 
 def build_team():
     ld = {"@context": "https://schema.org", "@type": "Person", "name": NAME, "jobTitle": f"{TITLE_LINE}, {BROKER}", "telephone": PHONE_TEL, "email": EMAIL,
-          "image": f"{SITE}/assets/kelley-headshot.jpg", "url": canon("team.html"), "worksFor": {"@type": "Organization", "name": BROKER},
+          "image": f"{SITE}/assets/kelley-headshot.jpg", "url": canon("team.html"), "worksFor": {"@type": "Organization", "name": BROKER, "url": BROKER_URL},
           "address": {"@type": "PostalAddress", "streetAddress": ADDR1, "addressLocality": "Grand Junction", "addressRegion": "CO", "postalCode": "81501"},
-          "alumniOf": "Colorado State University", "knowsAbout": ["New construction", "First-time home buyers", "Vacant land", "Fruita, CO", "Grand Junction, CO"]}
+          "alumniOf": "Colorado State University", "sameAs": [CB_PROFILE], "knowsAbout": ["New construction", "First-time home buyers", "Vacant land", "Fruita, CO", "Grand Junction, CO"]}
     body = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
   <figure data-sc-in><img src="assets/kelley-headshot-navy.jpg" alt="Kelley Griffin in a navy blazer, smiling outdoors" width="1500" height="1500"></figure>
@@ -631,7 +641,8 @@ def build_thank_you():
 <p>Kelley will be in touch soon, usually the same day. If it can’t wait, call her at <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
 <p><a class="cta cta--solid" href="index.html">Back to the home page</a></p>
 </div></div></section>"""
-    write("thank-you.html", page_shell(f"Thank you | {TEAM}", "Your message to Kelley Griffin was sent.", "thank-you.html", page_hero("Message sent", "Thank you.", "Your message is on its way to Kelley."), body))
+    doc = page_shell(f"Thank you | {TEAM}", "Your message to Kelley Griffin was sent.", "thank-you.html", page_hero("Message sent", "Thank you.", "Your message is on its way to Kelley."), body)
+    write("thank-you.html", doc.replace('<link rel="canonical"', '<meta name="robots" content="noindex">\n<link rel="canonical"', 1))
 
 def build_404():
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="prose"><p>That page is not here. The valley is, though.</p><div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem"><a class="cta cta--solid" href="index.html">Home</a><a class="cta" href="neighborhoods.html">Neighborhoods</a></div></div></div></section>"""
@@ -640,7 +651,7 @@ def build_404():
     write("404.html", doc)
 
 # ------------------------------------------------------------------ run ----
-home = document(f"{NAME}, {TEAM} | {BROKER} | Fruita and Grand Junction Real Estate",
+home = document(f"{NAME} | Fruita and Grand Junction Real Estate | {TEAM}",
     "Kelley Griffin, Coldwell Banker Distinctive Properties: buying, selling, new construction and land in Fruita, Grand Junction and the Grand Valley since 2008.", "index.html", home_body())
 write("index.html", home)
 # ------------------------------------------------------------------ blog ----
@@ -751,4 +762,24 @@ today = datetime.date.today().isoformat()
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{canon(p)}</loc><lastmod>{today}</lastmod></url>\n" for p in pages) + "</urlset>\n"
 (OUT / "sitemap.xml").write_text(sm)
 (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
+# llms.txt: a plain summary for AI assistants and answer engines (llmstxt.org)
+llms = f"""# {NAME}, {TEAM}
+
+> {NAME} is a REALTOR® and {TITLE_LINE} with {BROKER} in Grand Junction, Colorado. She helps people buy and sell homes, new construction, land and cabins across Fruita, Loma, the Redlands, Grand Junction, Palisade and the Grand Mesa. She has lived in the Grand Valley since 2008 and has more than ten years in real estate.
+
+- Office: {ADDR1}, {CITY}
+- Mobile: {PHONE}. Office: {OFFICE}. Email: {EMAIL}
+- Colorado license FA100069554
+- Coldwell Banker profile: {CB_PROFILE}
+
+## Main pages
+- [Meet Kelley]({canon("team.html")}): background, family and how she works
+- [Buyer's guide]({canon("buyers-guide.html")}) and [Seller's guide]({canon("sellers-guide.html")})
+- [Neighborhoods]({canon("neighborhoods.html")}): {", ".join(f"[{p['name']}]({canon('neighborhood-' + p['slug'] + '.html')})" for p in PLACES)}
+- [Recent sales]({canon("sold.html")}) and [Client words]({canon("testimonials.html")})
+- [Contact]({canon("contact.html")})
+
+## Blog
+""" + "".join(f"- [{x['title']}]({canon('blog/' + x['slug'] + '.html')}): {x['description']}\n" for x in load_posts() if not x.get('draft'))
+(OUT / "llms.txt").write_text(llms)
 print("built", len(pages), "pages (", len(post_pages), "blog posts ) ->", OUT, "| SITE =", SITE)
