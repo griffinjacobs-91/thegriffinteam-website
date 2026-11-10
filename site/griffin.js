@@ -80,7 +80,7 @@
   var film = document.querySelector(".calm-hero__video");
   var saveData = navigator.connection && navigator.connection.saveData;
   if (film && !reduce && !saveData) {
-    var small = window.matchMedia("(max-width: 860px)").matches;
+    var small = window.matchMedia("(max-width: 860px) and (orientation: portrait)").matches;
     var startFilm = function () {
       film.src = film.getAttribute(small ? "data-src-mobile" : "data-src");
       film.addEventListener("playing", function () { film.classList.add("is-playing"); }, { once: true });
