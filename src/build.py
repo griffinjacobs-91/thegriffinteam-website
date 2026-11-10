@@ -468,7 +468,7 @@ def build_team():
   <figure style="--ar:0.75"><img src="assets/kelley-dane-japan.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a narrow lantern-lined street abroad" width="1200" height="1600" loading="lazy"></figure>
 </div></div></section>
 {cta_band()}"""
-    write("team.html", page_shell(f"Meet Kelley Griffin | {TEAM}, {BROKER}", f"Kelley Griffin is a Broker Associate with {BROKER} in Grand Junction, Colorado: a Colorado native, in the Grand Valley since 2008, more than 10 years in real estate, specializing in new construction and first-time buyers.", "team.html",
+    write("team.html", page_shell(f"Meet Kelley Griffin | {TEAM}, {BROKER}", "Meet Kelley Griffin, Coldwell Banker Broker Associate: a Colorado native in the Grand Valley since 2008, focused on new construction and first-time buyers.", "team.html",
         page_hero("Meet Kelley", f"{NAME}", f"REALTOR®, {TITLE_LINE}, {BROKER}. Fruita, Grand Junction and the Grand Valley."), body,
         extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'))
 
@@ -488,7 +488,7 @@ def build_guides():
 <div style="max-width:52rem;margin-top:3rem">{steps_html(BUY_STEPS)}</div>
 <div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>After signing the final paperwork to complete the purchase, you are now the owner of a new house. It may take a few days for your loan to be funded once the paperwork has been returned to the lender, but once that check is delivered to the seller, you’ll be all set to move into the home of your dreams.</p></div></div></section>
 {cta_band("Our goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
-    write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "A step-by-step buyer's guide from Kelley Griffin, Coldwell Banker Distinctive Properties: research, budget, pre-approval, showings, offers, inspection, loan, appraisal and closing in Fruita and Grand Junction.", "buyers-guide.html",
+    write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "Kelley Griffin's step-by-step guide to buying a home in Fruita and Grand Junction: budget, pre-approval, showings, offers, inspection and closing.", "buyers-guide.html",
         page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-desert-aerial.jpg", alt="Aerial view of desert singletrack winding across the mesas outside Fruita"), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
@@ -502,17 +502,26 @@ def build_guides():
 </div></section>
 <section class="band"><div class="sc-wrap"><div class="prose" style="max-width:52rem" data-sc-in><h2>A step-by-step seller's guide</h2><p>Putting your home on the market can be a stressful process, especially when you don’t know what to expect. Fortunately, with the help of an experienced team of real estate agents and this easy to follow guide, you can smoothly complete the process. Following these steps will help you prepare so you can get organized and sell your home for the best price possible.</p></div>
 <div style="max-width:52rem;margin-top:3rem">{steps_html(SELL_STEPS)}</div>
-<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>Once you have sold your home, you’re free to take the next step on your journey. Whether this is relocating to a new city, moving into a larger home, or downsizing and enjoying your life as empty-nesters, knowing all your selling responsibilities have been taken care of will help you achieve peace of mind for your new path.</p></div></div></section>
+<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>Once you have sold your home, you’re free to take the next step on your journey. Whether this is relocating to a new city, moving into a larger home, or downsizing, knowing all your selling responsibilities have been taken care of will help you achieve peace of mind for your new path.</p></div></div></section>
 {cta_band("Know what your home is worth.", "A current market analysis, at no cost, from someone who has sold homes in every corner of the valley.")}"""
-    write("sellers-guide.html", page_shell(f"Seller's Guide to Selling Your Home | {TEAM}", "A step-by-step seller's guide from Kelley Griffin, Coldwell Banker Distinctive Properties: pricing, preparation, marketing, offers and closing, plus a free current market analysis for Grand Valley homes.", "sellers-guide.html",
+    write("sellers-guide.html", page_shell(f"Seller's Guide to Selling Your Home | {TEAM}", "Kelley Griffin's step-by-step guide to selling a Grand Valley home: pricing, preparation, marketing, offers and closing, plus a free market analysis.", "sellers-guide.html",
         page_hero("Selling", "Comprehensive seller's guide", "Pricing, preparation, marketing and closing, with a free market analysis to start.", photo="mesa-fall-overlook.jpg", alt="Golden aspens and dark spruce on the Grand Mesa in fall, with a lake far below"), sbody))
+
+NB_META = {
+    "fruita": "Living in Fruita, CO: singletrack trails, a lively downtown and small-town pace. Kelley Griffin's guide to Fruita homes and neighborhoods.",
+    "redlands": "Living in the Redlands: red-rock scenery, quiet streets and quick access to Fruita and Grand Junction. Kelley Griffin's neighborhood guide.",
+    "grand-junction": "Living in Grand Junction, CO: the valley's hub for trails, arts, dining and everyday amenities. Kelley Griffin's neighborhood guide.",
+    "loma": "Living in Loma, CO: rural acreage, big views and room for shops and livestock, minutes from Fruita. Kelley Griffin's neighborhood guide.",
+    "palisade": "Living in Palisade, CO: orchards, vineyards and a relaxed small-town feel at the east end of the valley. Kelley Griffin's neighborhood guide.",
+    "grand-mesa": "Cabins and land on the Grand Mesa: cool summers, snowy winters and high-country lakes. Kelley Griffin's guide to buying on the Mesa.",
+}
 
 def build_neighborhoods():
     cards = ""
     for i, p in enumerate(PLACES, 1):
         cards += f'<a class="card card--type" href="neighborhood-{p["slug"]}.html" data-sc-in><span class="card__n">{i:02d}</span><h3>{esc(p["name"])}</h3><p>{esc(p["blurb"])}</p><span class="sc-label">{esc(p["elev"])}</span><span class="link">Explore {esc(p["name"].replace("The ", "the "))}</span></a>'
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="cards" data-sc-stagger="70" data-sc-in>{cards}</div></div></section>{cta_band("Which one is yours?", "Tell Kelley how you want to live and she will tell you where in the valley that happens.")}"""
-    write("neighborhoods.html", page_shell(f"Grand Valley Neighborhoods: Fruita, Redlands, Grand Junction, Loma, Palisade, Grand Mesa | {TEAM}", "Kelley Griffin's lifestyle guides to the Grand Valley: Fruita, the Redlands, Grand Junction, Loma, Palisade and the Grand Mesa. Recreation, amenities, attractions and why people love each one.", "neighborhoods.html",
+    write("neighborhoods.html", page_shell(f"Grand Valley Neighborhoods: Fruita, Redlands, Grand Junction, Loma, Palisade, Grand Mesa | {TEAM}", "Kelley Griffin's guides to Fruita, the Redlands, Grand Junction, Loma, Palisade and the Grand Mesa: recreation, amenities and local attractions.", "neighborhoods.html",
         page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="mesa-view-bookcliffs.jpg", alt="Looking down from the Grand Mesa across the valley to the Book Cliffs on a winter afternoon"), body))
     for i, p in enumerate(PLACES):
         prev_ = PLACES[i-1] if i > 0 else PLACES[-1]; next_ = PLACES[(i+1) % len(PLACES)]
@@ -529,7 +538,7 @@ def build_neighborhoods():
   {facet("Outdoor recreation", p['rec'])}{facet("Local attractions", p['attr'])}{facet("Amenities", p['amen'])}{facet(f"Why people love {esc(nm)}", p['love'])}
 </div><div class="nbnavs" data-sc-in>{nav}</div></div></section>
 {cta_band(f"Thinking about {esc(nm)}?", "Kelley knows the streets, the builders and the trailheads. Start with a conversation.")}"""
-        write(f"neighborhood-{p['slug']}.html", page_shell(f"{p['name']}, CO Real Estate and Lifestyle Guide | {TEAM}", f"{p['blurb']} A neighborhood guide from Kelley Griffin, {BROKER}.", f"neighborhood-{p['slug']}.html",
+        write(f"neighborhood-{p['slug']}.html", page_shell(f"{p['name']}, CO Real Estate and Lifestyle Guide | {TEAM}", NB_META[p['slug']], f"neighborhood-{p['slug']}.html",
             page_hero("Neighborhood guide", esc(p['name']), esc(p['line']), photo=p['photo'], alt=p['alt']), body))
 
 def build_testimonials():
@@ -575,7 +584,7 @@ def build_contact():
     <figure style="margin:2.5rem 0 0"><img src="assets/kelley-dane-mesa-lake.jpg" alt="Kelley and Dane Griffin on the rocky shore of a lake on the Grand Mesa" width="1200" height="1600" loading="lazy" style="width:100%;height:auto;display:block"></figure>
   </div>
 </div></section>"""
-    write("contact.html", page_shell(f"Contact Kelley Griffin | {TEAM}, {BROKER}", f"Reach Kelley Griffin, Broker Associate with {BROKER}, at {PHONE} or {EMAIL}. Office at {ADDR1}, {CITY}.", "contact.html",
+    write("contact.html", page_shell(f"Contact Kelley Griffin | {TEAM}, {BROKER}", f"Call Kelley Griffin at {PHONE}, email {EMAIL}, or send a message. Coldwell Banker office at {ADDR1}, Grand Junction.", "contact.html",
         page_hero("Contact", "Let’s talk about your next move.", "Buying or selling is a big deal. Kelley guides you through every step with clarity, confidence, and communication you can count on."), body))
 
 def build_privacy():
@@ -607,7 +616,7 @@ def build_404():
 
 # ------------------------------------------------------------------ run ----
 home = document(f"{NAME}, {TEAM} | {BROKER} | Fruita and Grand Junction Real Estate",
-    f"Kelley Griffin, Broker Associate with {BROKER}: buying, selling, new construction and land across Fruita, Grand Junction and the Grand Valley. A Colorado native, in the valley since 2008, more than 10 years in real estate.", "index.html", home_body())
+    "Kelley Griffin, Coldwell Banker Distinctive Properties: buying, selling, new construction and land in Fruita, Grand Junction and the Grand Valley since 2008.", "index.html", home_body())
 write("index.html", home)
 # ------------------------------------------------------------------ blog ----
 # Each post is one file in content/blog/, named YYYY-MM-DD-slug.html (or .md).
