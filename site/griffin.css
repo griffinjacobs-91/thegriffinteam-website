@@ -596,14 +596,14 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .facet li { position: relative; padding-left: 1.3rem; color: var(--sc-ink); line-height: 1.6; }
 .facet li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 0.6rem; height: 1px; background: var(--gt-gold-deep); }
 .nbnavs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sc-5); margin-top: var(--sc-8); }
-.nbnav { position: relative; display: grid; align-content: end; gap: 0.3rem; min-height: 13rem; padding: var(--sc-5); overflow: hidden; color: #F8F5EE; text-decoration: none; background: #0B1230; }
+.nbnav { position: relative; display: grid; align-content: end; gap: 0.3rem; aspect-ratio: 3 / 2; padding: var(--sc-5); overflow: hidden; color: #F8F5EE; text-decoration: none; background: #0B1230; }
 .nbnav img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--sc-ease-out); }
 .nbnav::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,18,48,0.1) 30%, rgba(11,18,48,0.85) 100%); }
 .nbnav:hover img { transform: scale(1.04); }
 .nbnav__k, .nbnav__n { position: relative; z-index: 1; }
 .nbnav__k { font-size: 0.64rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gt-gold); font-weight: 500; }
 .nbnav__n { font-family: var(--sc-font-display); font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem); line-height: 1.05; }
-@media (max-width: 860px) { .nb-intro__grid, .facets { grid-template-columns: 1fr; gap: var(--sc-6); } .nbnavs { grid-template-columns: 1fr 1fr; gap: var(--sc-3); } .nbnav { min-height: 9rem; padding: var(--sc-4); } }
+@media (max-width: 860px) { .nb-intro__grid, .facets { grid-template-columns: 1fr; gap: var(--sc-6); } .nbnavs { grid-template-columns: 1fr; gap: var(--sc-4); } .nbnav { padding: var(--sc-5); } }
 
 /* blog index: photo cards */
 .blog-index .post-year { margin: var(--sc-9) 0 var(--sc-5); padding-bottom: var(--sc-3); border-bottom: 1px solid color-mix(in oklab, var(--gt-navy) 14%, transparent); }
