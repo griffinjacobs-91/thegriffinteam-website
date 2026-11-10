@@ -237,10 +237,26 @@ def document(title, desc, path, body, extra_head="", valley=True, dark_first=Fal
 </html>
 """
 
+_IMG = re.compile(r'<img ([^>]*?)src="assets/([^"]+?)\.jpg"([^>]*)>')
+def add_srcset(text):
+    """Photos saved by tools/add_photo.py come in two sizes: name.jpg (large, for big
+    screens) and name-sm.jpg (1200 px, for phones). Let the browser pick the right one."""
+    def fix(m):
+        before, name, after = m.groups()
+        if "srcset=" in before + after: return m.group(0)
+        sm = OUT / "assets" / f"{name}-sm.jpg"
+        if not sm.exists(): return m.group(0)
+        w = img_size(f"{name}.jpg")[0]
+        # a full-bleed banner is cropped to cover, so on a tall phone screen it needs the large file
+        sizes = "max(100vw, 100vh)" if 'class="bg"' in before + after or "calm-hero__media" in before + after else "(max-width: 860px) 100vw, 50vw"
+        return (f'<img {before}src="assets/{name}.jpg" srcset="/assets/{name}-sm.jpg 1200w, /assets/{name}.jpg {w}w" '
+                f'sizes="{sizes}"{after}>')
+    return _IMG.sub(fix, text)
+
 def write(path, html_text):
     out = OUT / path
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(absolutize(html_text), encoding="utf-8")
+    out.write_text(absolutize(add_srcset(html_text)), encoding="utf-8")
 
 # ---------------------------------------------------------------- home ----
 def home_body():
@@ -285,7 +301,7 @@ def home_body():
 
   <!-- 1 · ARRIVAL: the valley from the air, playing quietly behind the headline. Normal scrolling. -->
   <section class="hero calm-hero ground--dark" data-ground="dark">
-    <img class="calm-hero__media" src="assets/hero-orchard-aerial.jpg" alt="" width="1600" height="900" fetchpriority="high">
+    <picture><source media="(max-width: 860px) and (orientation: portrait)" srcset="assets/hero-orchard-aerial-m.jpg" width="608" height="1080"><img class="calm-hero__media" src="assets/hero-orchard-aerial.jpg" alt="" width="1920" height="1080" fetchpriority="high"></picture>
     <video class="calm-hero__media calm-hero__video" data-src="motion/hero-loop.mp4" data-src-mobile="motion/hero-loop-m.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
     <div class="calm-hero__scrim" aria-hidden="true"></div>
     <figure class="hero__card calm-hero__card">
@@ -392,7 +408,7 @@ def home_body():
 
 # ---------------------------------------------------------- inner pages ----
 def page_shell(title, desc, path, hero_html, body_html, extra_head=""):
-    photo = "page-hero--photo" in hero_html
+    photo = "page-hero--photo" in hero_html or "page-hero--split" in hero_html
     body = f"""{bar()}
 <span data-sc-progress></span>
 <main id="main" tabindex="-1" class="page{' page--photo' if photo else ''}">
@@ -405,6 +421,13 @@ def page_shell(title, desc, path, hero_html, body_html, extra_head=""):
 
 def page_hero(label, h1, lede="", photo=None, alt=""):
     if photo:
+        w, h = img_size(photo)
+        if h > w or w < 1800:
+            # A tall or small photo would be cut to a thin, soft strip across the full width.
+            # Show it whole beside the heading instead.
+            return f"""<section class="page-hero page-hero--split ground--dark" data-ground="dark"><div class="sc-wrap page-hero__grid">
+  <div class="page-hero__text"><p class="sc-label">{esc(label)}</p><h1 class="sc-display">{h1}</h1>{f'<p class="sc-lede">{lede}</p>' if lede else ''}</div>
+  <figure class="page-hero__pic"><img src="assets/{photo}" alt="{esc(alt)}" width="{w}" height="{h}" fetchpriority="high"></figure></div></section>"""
         return f"""<section class="page-hero page-hero--photo ground--dark" data-ground="dark"><img class="bg" src="assets/{photo}" alt="{esc(alt)}" width="{img_size(photo)[0]}" height="{img_size(photo)[1]}" fetchpriority="high"><div class="scrim" aria-hidden="true"></div>
   <div class="sc-wrap"><p class="sc-label">{esc(label)}</p><h1 class="sc-display">{h1}</h1>{f'<p class="sc-lede">{lede}</p>' if lede else ''}</div></section>"""
     return f"""<section class="page-hero"><div class="sc-wrap"><p class="sc-label">{esc(label)}</p><h1 class="sc-display">{h1}</h1>{f'<p class="sc-lede">{lede}</p>' if lede else ''}</div></section>"""
@@ -489,7 +512,7 @@ def build_guides():
 <div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>After signing the final paperwork to complete the purchase, you are now the owner of a new house. It may take a few days for your loan to be funded once the paperwork has been returned to the lender, but once that check is delivered to the seller, you’ll be all set to move into the home of your dreams.</p></div></div></section>
 {cta_band("Our goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
     write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "Kelley Griffin's step-by-step guide to buying a home in Fruita and Grand Junction: budget, pre-approval, showings, offers, inspection and closing.", "buyers-guide.html",
-        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-desert-aerial.jpg", alt="Aerial view of desert singletrack winding across the mesas outside Fruita"), bbody))
+        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-river-canyon.jpg", alt="The Colorado River winding through red rock canyons below a rocky overlook near Fruita"), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
   <figure data-sc-in><img src="assets/kelley-dane-selfie.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a sunny mountain trail" width="1200" height="1600" loading="lazy"></figure>
@@ -545,7 +568,7 @@ def build_testimonials():
     items = "".join(f'<blockquote class="tcard" data-sc-in><p>{esc(t)}</p><footer>{esc(n)}</footer></blockquote>' for n, t in REVIEWS)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="tcards">{items}</div></div></section>{cta_band()}"""
     write("testimonials.html", page_shell(f"Client Testimonials | {NAME}, {TEAM}", "What clients say about working with Kelley Griffin, Coldwell Banker Distinctive Properties, in Fruita and Grand Junction, Colorado.", "testimonials.html",
-        page_hero("Client words", "What our clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-lake-sunset.jpg", alt="A lake on the Grand Mesa reflecting a pink and gold sunset"), body))
+        page_hero("Client words", "What our clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-sunset-road.jpg", alt="Sunset over the Grand Mesa from a snowy road beside the Grand Mesa National Forest sign"), body))
 
 def build_sold():
     items = "".join(f'<div class="sale" data-sc-in><div class="sale__pic"><img src="assets/{pic}" alt="{esc(addr)}" width="{img_size(pic)[0]}" height="{img_size(pic)[1]}" loading="lazy"></div><div class="sale__price">{price}</div><div class="sale__addr">{esc(addr)}</div><div class="sale__meta">Sold · {esc(meta)}</div></div>' for price, addr, meta, pic in SOLD)

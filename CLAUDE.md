@@ -74,7 +74,7 @@ Find the sentence in `src/build.py` (search for a few distinctive words) and edi
 
 ### Swap or add a photo
 1. Kelley uploads photos to the `inbox/` folder on GitHub (she has a bookmark for the upload page), or attaches them in the chat if your session can save attachments.
-2. Run `pip install pillow pillow-heif` once, then `python3 tools/add_photo.py inbox/<file> <short-name> [folder]`. It resizes to 1600 px wide, fixes rotation, compresses, and strips GPS and camera data. It prints the width and height.
+2. Run `pip install pillow pillow-heif` once, then `python3 tools/add_photo.py inbox/<file> <short-name> [folder]`. It saves a large copy for big screens and a 1200 px copy for phones (the site picks the right one), fixes rotation, compresses, and strips GPS and camera data. It prints the width and height. Always start from the full-size original; a small photo looks soft as a banner.
 3. Point the page at the new file, write true alt text (what the photo shows, in a sentence), and delete the original from `inbox/`.
 
 ## Rules that always apply
