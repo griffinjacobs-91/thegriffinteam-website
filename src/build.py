@@ -169,6 +169,7 @@ def head(title, desc, path, og="assets/kelley-headshot.jpg", extra=""):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Poppins:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="scrollcraft.css">
 <link rel="stylesheet" href="griffin.css">
+<link rel="stylesheet" href="motion.css">
 <noscript><link rel="stylesheet" href="no-script.css"></noscript>
 {extra}"""
 
@@ -222,7 +223,8 @@ def site_foot():
 
 SCRIPTS = """<script src="scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
-<script src="griffin.js"></script>"""
+<script src="griffin.js"></script>
+<script src="motion.js"></script>"""
 
 def document(title, desc, path, body, extra_head="", valley=True, dark_first=False):
     return f"""<!doctype html>
