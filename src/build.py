@@ -103,26 +103,26 @@ REVIEWS = [(r["name"], r["words"]) for r in json.loads((CONTENT / "testimonials.
 SOLD = [(r["price"], r["address"], r["details"], r["photo"]) for r in json.loads((CONTENT / "recent-sales.json").read_text(encoding="utf-8"))]
 
 BUY_STEPS = [
- ("Research", "Do you already know where you want to buy? If you want a condo, townhome, or single-family home? Which features do you like and dislike? What’s available on the market now? If you answered no to any of these questions, now is the time to start researching. In addition to looking for homes that interest you, also take note of any changes in asking prices. This could give you valuable insight into housing trends in specific neighborhoods and help you when the time comes to make an offer."),
- ("Decide on your budget", "Notice we said to decide on your budget, not determine how much the mortgage company will give you. In many cases, a mortgage company will pre-approve you for more than you’re comfortable spending, which is why you need to determine the monthly payment you feel comfortable with before talking to a lender. This likely includes doing a full household budget and taking into consideration what changes other than a mortgage payment will occur once you move into your new home. If you’ve lived in an apartment or with roommates, you may overlook new expenses like garbage, water, or HOA fees that could easily blow your budget."),
- ("Get prequalified", "Just because you think you can afford a certain payment every month doesn’t mean the mortgage company will agree. Just as they may approve you for too large of an amount, they may also approve you for a lesser amount or deny you a mortgage altogether. Lack of time at a job, insufficient credit, past bankruptcies, or other financial issues can cause major problems when trying to secure a mortgage. Before you get your heart set on a home, talk to a mortgage professional to find out what amount you can qualify for. This will also be an advantage when you make an offer on a home, as some sellers won’t entertain offers from those who aren’t already prequalified for a loan."),
- ("Choose a real estate agent", "Can you shop for, look at, and ultimately make an offer on a home without a real estate agent? Technically yes, but why would you when it costs you nothing for agents like us to take much of the stress off your shoulders? Not only will we help identify properties you might be interested in, arrange showings, and ultimately handle the offer process, but we also have a knowledge of the market that you don’t possess. Finding the perfect home can be a daunting task, this is where our expertise and wealth of knowledge come into play. Let us show you around some homes that meet your dream home criteria so you can find the one that's right for you."),
- ("Find the right home", "This should be the most enjoyable step of the entire process (other than moving in!). We will arrange showings of homes you’re interested in that are within your price range. Take notes about what you like and don’t like, and make sure to pay attention to details. Turn light switches on and off, open and close doors, and run the faucets in various rooms. Don’t limit your inspection to the home itself. Make sure to take time to explore the neighborhood and keep an eye on traffic at certain times of the day, the parking situation, and how close it is to necessities like schools and grocery stores."),
- ("Make an offer", "Once you have selected the perfect home, work with your agent to craft a fair offer based on the value of comparable homes on the market. Depending on what the home is listed at and whether the current environment is a buyer’s or seller’s market, your offer may be below, at, or even above the asking price. We will be able to help you negotiate if you receive a counteroffer and reach an agreement. At this point, the house will go into escrow."),
- ("Have the home inspected", "In most cases, your offer will be contingent on having the home inspected to ensure there is no major structural damage or large repairs needed. We can help you arrange this, and you can schedule it within days of making an offer. If there are no major issues, the process goes to step eight. If there is, you can renegotiate your offer based on what needs to be fixed, or you can withdraw it."),
- ("Select your loan", "Now is the time to go back to the mortgage lender who pre-approved or pre-qualified you and choose your mortgage. You will be presented with various options based on your unique financial situation, including fixed-rate, variable-rate, 15-year, 30-year, or special programs such as VA loans or FHA loans. Work with your mortgage lender to select the option you feel the most comfortable with."),
- ("Get a home appraisal", "Your lender will have your new home appraised so they have their independent value of it. The appraisal is to ensure that all parties involved are paying a fair price for the house."),
- ("Finish paperwork", "No one looks forward to all the paperwork involved in buying a home, but it’s a necessary part of the process. Fortunately, everything will be arranged by your lender and title company and, when you’re finished, you’ll know you are the legal owner of your new home."),
+ ("Research", "Explore the neighborhoods, home types and features you like, and see what’s on the market now. Watch how asking prices move, since that tells you a lot about local trends when it’s time to make an offer."),
+ ("Decide on your budget", "Choose a monthly payment you’re comfortable with before you talk to a lender, because a pre-approval can come in higher than you want to spend. Build in new costs like trash, water and HOA fees."),
+ ("Get prequalified", "Talk to a mortgage professional to find out what you can qualify for. Job history, credit and other financial factors all play a part, and some sellers won’t consider an offer without a prequalification."),
+ ("Choose a real estate agent", "You can buy without one, but an experienced agent takes much of the stress off your shoulders at no cost to you. I find properties, arrange showings, handle the offer process, and bring market knowledge you can lean on."),
+ ("Find the right home", "This is the fun part! Tour homes in your price range, take notes, and check the details: light switches, doors, faucets. Explore the surroundings too, including traffic at different times of day, parking, and how close everyday necessities are."),
+ ("Make an offer", "Work with your agent on a fair offer based on comparable homes and current market conditions. It may come in below, at or above asking, and I’ll help you negotiate any counteroffer. Once you agree, the home goes under contract."),
+ ("Have the home inspected", "Offers are usually contingent on an inspection, which can be scheduled within days. If major issues come up, you can renegotiate or withdraw."),
+ ("Select your loan", "Go back to your lender and choose your mortgage, such as fixed or variable rate, 15 or 30 year, or a program like VA or FHA."),
+ ("Get a home appraisal", "Your lender orders an independent appraisal to confirm the price is fair for everyone involved."),
+ ("Finish paperwork", "Your lender and title company arrange everything. When you sign, you’re the legal owner."),
 ]
 SELL_STEPS = [
- ("Understand why you're selling", "What do you want to accomplish with the sale of your home? Do you want to make a certain amount of money that you can put toward a larger or nicer home? Do you need to sell it as soon as possible to facilitate a move to a new city or area? Once you understand your needs, you can better craft your offer. For example, if you need to sell quickly, you might want to price your home lower than if your goal is to make a certain profit margin. Make sure you convey these needs to your team of real estate agents once you choose one so they can adjust your selling price accordingly."),
- ("Determine selling price", "Knowing how to price your home is one of the most important parts of the selling process. When you set a fair price in the beginning, you’ll get the most interest from other real estate agents and prospective buyers. Overpricing your home could lead to reduced interest, and underpricing leads to receiving less than what your home is worth. Working with a team of real estate agents is the best way to determine the right selling price for your home. An experienced team can determine what other comparable homes are selling for, evaluate the current market, and may even suggest a home appraisal."),
- ("Start preparations", "If you’ve kept your home in showroom condition since you’ve lived in it, you’re in the minority of homeowners. Once you price your home, it’s time to start getting it ready to be shown to potential buyers. This includes getting rid of clutter, depersonalizing the space so that buyers can envision themselves in the space, making any small repairs, and doing a deep clean to make sure your home is in pristine condition."),
- ("Develop a marketing strategy", "We will develop a marketing strategy that is perfect for advertising your home. This involves listing the home and then driving the right people to that listing through social media campaigns, agent-to-agent referrals, traditional media, or SEO advertising. Our team creates a marketing campaign that aims to get the most possible traffic to your listing in the first three weeks after becoming a client."),
- ("Evaluate offers", "Receiving an offer is an exciting part of the process, but it doesn’t mean the journey is over. We will evaluate each offer and make sure the party making the offer is prequalified or pre-approved by a mortgage lender and that their offer is acceptable to you. If the offer is too low, you can make a counter-offer or offer other ways to bridge the gap, such as covering some or all of the closing costs, making repairs, adjusting the move-in date, or leaving some appliances or fixtures for the new buyer."),
- ("Accept an offer", "Once we deem the offer is acceptable, we will review the proposed contract to make sure it’s all in order and includes the necessary components such as deposit amount, down payment, financing, inspection rights and repair allowances, contingencies, settlement date, and a list of fees and who will pay them. When both parties have agreed to the terms, a final contract will be prepared by your team of real estate agents."),
- ("Get ready to close", "You have accepted an offer and are now very close to the end of your selling journey. But first, you and the buyer must make a list of what needs to be done before closing. In some cases, your home may need to be formally inspected, surveyed, and appraised. In other cases, major or minor repairs will need to be made before the house can close. We will head up efforts to develop and execute this list, get each action item paid for by the correct party, and make sure everything is in order by the closing date. A few days before the closing date, we will call the company closing the transaction to make sure everything is ready to go. If you haven’t done so already, you also need to make arrangements to move out of the home so the new buyer can take possession."),
- ("Close", "You’ve reached the last step in the seller’s process. When you close on a home you are selling, you are legally transferring ownership of the property to the new buyer. We will meet with the company closing the transaction to sign the final paperwork and go over any issues that have not yet been taken care of. During this time, you can also make plans with your team of real estate agents to handle final details such as canceling utilities, cable, and lawn or trash services, changing the name on accounts that the new owner is retaining and ensuring the new owner has instructions for all appliances that will remain in the home."),
+ ("Understand why you're selling", "Decide what you want from the sale, whether that’s a certain profit or a quick move, and share your goals with your agent so your pricing and strategy fit your needs."),
+ ("Determine selling price", "A fair price from the start draws the most interest. Overpricing can reduce interest, and underpricing leaves money on the table. I’ll review comparable sales and the current market, and may suggest an appraisal."),
+ ("Start preparations", "Declutter, depersonalize so buyers can picture themselves in the space, make small repairs, and give the home a deep clean."),
+ ("Develop a marketing strategy", "I list your home and drive the right traffic to it through social media, agent-to-agent referrals, traditional media, and SEO. The goal is the most possible traffic in the first three weeks."),
+ ("Evaluate offers", "I confirm each buyer is prequalified or pre-approved and that the offer works for you. If an offer is low, you can counter or bridge the gap with closing cost help, repairs, a different move-in date, or leaving appliances or fixtures."),
+ ("Accept an offer", "I review the contract for deposit, down payment, financing, inspection rights, repair allowances, contingencies, settlement date, and fees. Once both sides agree, I prepare the final contract."),
+ ("Get ready to close", "I build and manage the to-do list with the buyer, which may include inspection, survey, appraisal, and repairs, and make sure the right party pays for each item. A few days before closing, I confirm with the closing company. Plan your move-out so the buyer can take possession."),
+ ("Close", "We meet with the closing company to sign the final paperwork and transfer ownership. You can also plan the final details, like canceling utilities and services, transferring accounts the new owner is keeping, and leaving instructions for remaining appliances."),
 ]
 
 # ------------------------------------------------------------ marks --------
@@ -273,7 +273,7 @@ def write(path, html_text):
 # ---------------------------------------------------------------- home ----
 def home_body():
     ways = [
-      ("Buying", "First home or fifth, we sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? We know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "listing-353-belden.jpg", "A tan stucco home with a red tile roof, a green lawn and mature shade trees on Belden Avenue"),
+      ("Buying", "First home or fifth, I sort the listings against your wants-and-needs list, set up the showings, and handle every contract and signature until the keys are yours. Need a lender? I know the ones past clients loved.", "buyers-guide.html", "Buyer's guide", "listing-353-belden.jpg", "A tan stucco home with a red tile roof, a green lawn and mature shade trees on Belden Avenue"),
       ("Selling", "A current market analysis at no cost, then a marketing plan that puts your home in front of the right buyers in its first three weeks on the market. Pricing, offers, inspections and closing, handled.", "sellers-guide.html", "Seller's guide", "listing-2229-canyon-rim.jpg", "A white home on open land in the Redlands, with the red cliffs of the Colorado National Monument behind it"),
       ("Building and land", "New construction, vacant lots and farmland are a specialty. Dane's years as a residential general contractor mean the questions about lots, builders and timelines get real answers.", "contact.html", "Ask about a lot", "listing-358-canyon-rim.jpg", "Aerial view of new homesites along a curving road in the Redlands, under the red cliffs of the Colorado National Monument"),
     ]
@@ -322,7 +322,7 @@ def home_body():
     </figure>
     <div class="calm-hero__copy">
       <p class="hero__who">Fruita · Grand Junction · the Grand Valley</p>
-      <h1 class="sc-display">Real estate for the valley we call home.</h1>
+      <h1 class="sc-display">Real estate for the valley I call home.</h1>
       <p class="hero__lede">Buying, selling, building and land, with a Colorado native who has lived here since 2008 and sold homes in every corner of it.</p>
       <div class="hero__actions"><a class="cta cta--solid" href="contact.html">{CTA}</a><a class="cta" href="team.html">Meet Kelley</a></div>
     </div>
@@ -349,9 +349,9 @@ def home_body():
   <section class="apart sc-section" data-sc-act="flow">
     <div class="sc-wrap">
       <div class="apart__grid" data-sc-in data-sc-stagger="80">
-        <h2 class="sc-display">What sets us apart?</h2>
+        <h2 class="sc-display">What sets me apart?</h2>
         <div>
-          <p class="sc-body">We’ve called the Grand Valley home since 2008, and we truly live the lifestyle we sell. From hiking and biking trails to hidden outdoor gems, we know this community inside and out. With Dane’s background as a residential general contractor, we bring a deep understanding of new construction and vacant land opportunities to every transaction. As a small, hands-on team, we’re with our clients from start to finish: no handoffs, no confusion, just clear communication and a seamless experience every step of the way.</p>
+          <p class="sc-body">I’ve called the Grand Valley home since 2008, and I truly live the lifestyle I sell. From hiking and biking trails to hidden outdoor gems, I know this community inside and out. With Dane’s background as a residential general contractor, I bring a deep understanding of new construction and vacant land opportunities to every transaction. I’m with my clients from start to finish: no handoffs, no confusion, just clear communication and a seamless experience every step of the way.</p>
           <div class="apart__links"><a class="link" href="team.html">The whole story</a><a class="link" href="sold.html">Recent sales</a></div>
         </div>
       </div>
@@ -431,10 +431,10 @@ def page_shell(title, desc, path, hero_html, body_html, extra_head=""):
 {extra_head}"""
     return document(title, desc, path, body)
 
-def page_hero(label, h1, lede="", photo=None, alt=""):
+def page_hero(label, h1, lede="", photo=None, alt="", whole=False):  # whole=True shows a house photo uncropped beside the heading
     if photo:
         w, h = img_size(photo)
-        if h > w or w < 1800:
+        if whole or h > w or w < 1800:
             # A tall or small photo would be cut to a thin, soft strip across the full width.
             # Show it whole beside the heading instead.
             return f"""<section class="page-hero page-hero--split ground--dark" data-ground="dark"><div class="sc-wrap page-hero__grid">
@@ -446,6 +446,13 @@ def page_hero(label, h1, lede="", photo=None, alt=""):
 
 def cta_band(h="Ready when you are.", p="Buying or selling is a big deal. Kelley guides you through every step with clarity, confidence, and communication you can count on."):
     return f"""<section class="band band--navy"><div class="sc-wrap split" style="align-items:center"><div data-sc-in><h2 class="sc-display sc-display--md">{h}</h2><p class="sc-body" style="margin-top:1rem">{p}</p></div><div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:flex-start" data-sc-in><a class="cta cta--solid" href="contact.html">{CTA}</a><a class="cta" href="tel:{PHONE_TEL}">{PHONE}</a></div></div></section>"""
+
+def flowchart(name, cap, alt):
+    """A guide's one-page flow chart: the picture opens the PDF, with a plain download link under it."""
+    w, h = img_size(f"guides/{name}.png")
+    return (f'<figure class="flowchart" data-sc-in><a href="assets/guides/{name}.pdf" aria-label="{esc(cap)} (PDF)">'
+            f'<img src="assets/guides/{name}.png" alt="{esc(alt)}" width="{w}" height="{h}" loading="lazy"></a>'
+            f'<figcaption>{esc(cap)}. <a class="link" href="assets/guides/{name}.pdf" download>Download the PDF</a> to save or print.</figcaption></figure>')
 
 def steps_html(steps):
     out = '<div class="steps">'
@@ -462,14 +469,14 @@ def build_team():
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
   <figure data-sc-in><img src="assets/kelley-headshot-navy.jpg" alt="Kelley Griffin in a navy blazer, smiling outdoors" width="1500" height="1500"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
-    <h2>Get to know me</h2>
-    <p>Hello! We are so excited to meet you and help you through your next real estate transaction. We are locals who LOVE where we live. We love spending time outside, and when we are not working (or chasing kids) you'll find us on mountain bikes, skis, or hiking with our dog. We also have a passion for travel!</p>
-    <p>We met while attending Colorado State University in Fort Collins. We married in 2008 and immediately moved to Grand Junction. We have since visited and lived in several countries, but the Grand Valley is definitely "home". We are parents to three boys (twins and a singleton) who make sure there is never a dull moment in our household!</p>
-    <p>Dane has a background in Construction Management, and is the owner of Griffin Design and Construction, LLC. Along with building residential homes, he also has experience managing international aquarium projects in Russia, Korea and the UK.</p>
-    <p>Kelley's background is in Public Relations, Event Planning and Marketing. She has done events and marketing for organizations in Fort Collins, Loveland, Grand Junction and Fruita. Since getting her real estate license, she has managed transactions for new construction, mobile homes, vacant farmland, cabins on the Mesa and historic downtown homes.</p>
-    <h2>Why it works</h2>
-    <p>For Kelley Griffin, real estate is about more than finding the right home. It's about helping people build a life they love. A Colorado native with more than 10 years of real estate experience, Kelley has built her business on trust, exceptional service, and deep local knowledge of the Grand Valley. She specializes in new construction, first-time homebuyers, and residential properties of all kinds, helping clients navigate every step of the buying and selling process with confidence.</p>
-    <p>Before real estate, Kelley built a career in marketing, public relations, and event planning. Today, those skills allow her to strategically market homes, negotiate effectively, and deliver a seamless client experience from start to finish.</p>
+    <h2>Meet Kelley</h2>
+    <p>Hello, and welcome! I’m so excited to meet you and help you through your next real estate transaction. I’m a local who LOVES where I live. I love spending time outside, and when I’m not working (or chasing kids) you’ll find me on my mountain bike, on skis, or hiking with our dog. I also have a passion for travel!</p>
+    <p>I met my husband, Dane, while we were both attending Colorado State University in Fort Collins. We married in 2008 and moved straight to Grand Junction. We’ve since visited and lived in several countries, but the Grand Valley is definitely “home.” Together we’re parents to three boys (twins and a singleton) who make sure there’s never a dull moment in our household!</p>
+    <p>Dane has a background in Construction Management and is the owner of Griffin Design and Construction, LLC. Along with building residential homes, he has experience managing international aquarium projects in Russia, Korea and the UK.</p>
+    <p>My own background is in Public Relations, Event Planning and Marketing, and I’ve done events and marketing for organizations in Fort Collins, Loveland, Grand Junction and Fruita. Since getting my real estate license, I’ve managed transactions for new construction, mobile homes, vacant farmland, cabins on the Mesa and historic downtown homes.</p>
+    <h2>Why Work With Me</h2>
+    <p>For me, real estate is about more than finding the right home. It’s about helping people build a life they love. As a Colorado native with more than 10 years of real estate experience, I’ve built my business on trust, exceptional service, and deep local knowledge of the Grand Valley. I specialize in new construction, first-time homebuyers, and residential properties of all kinds, and I help my clients navigate every step of buying and selling with confidence.</p>
+    <p>Before real estate, I built a career in marketing, public relations, and event planning. Today, those skills help me market homes strategically, negotiate effectively, and deliver a seamless experience from start to finish.</p>
     <h2>Contact details</h2>
     <ul class="facts-list">
       <li><span>Name</span><span>{NAME}, REALTOR®, {TITLE_LINE}</span></li>
@@ -485,10 +492,10 @@ def build_team():
 </div></section>
 <section class="band"><div class="sc-wrap split" style="align-items:center">
   <figure data-sc-in style="box-shadow:none"><img src="assets/griffin-family-terrace.jpg" alt="The Griffin family of five on a stone terrace overlooking a historic city" width="1600" height="1200" loading="lazy"></figure>
-  <div class="prose" data-sc-in><h2>The Griffin Team</h2><p>A small, hands-on team: Kelley on the real estate, Dane on the building side when a lot, a plan or a timeline needs a contractor's eye. With our clients from start to finish. No handoffs, no confusion, just clear communication and a seamless experience every step of the way.</p><a class="link" href="testimonials.html">What clients say</a></div>
+  <div class="prose" data-sc-in><h2>The Griffin Team</h2><p>I’m with my clients from start to finish: no handoffs, no confusion, just clear communication and a seamless experience every step of the way. And when a lot, a plan or a timeline needs a builder’s eye, Dane is on the building side.</p><a class="link" href="testimonials.html">What clients say</a></div>
 </div></section>
 <section class="sc-section"><div class="sc-wrap split dane" style="align-items:center">
-  <div class="prose" data-sc-in><p class="sc-label">The building side</p><h2>Dane Griffin</h2><p>Dane owns Griffin Design and Construction, LLC and builds residential homes. When a client is weighing a lot, a floor plan or a builder's timeline, he is the contractor's eye on the team, so the questions about land, builders and schedules get real answers.</p><a class="link" href="contact.html">Ask about building</a></div>
+  <div class="prose" data-sc-in><h2>The Building Side</h2><p class="sc-label">Dane Griffin, Griffin Design and Construction, LLC</p><p>Dane is my husband and the owner of Griffin Design and Construction, LLC, a residential home builder. His construction background is one more resource I can draw on when clients have questions about land, floor plans, or builder timelines.</p><a class="link" href="contact.html">Ask about building</a></div>
   <figure class="dane__pic" data-sc-in><img src="assets/dane-headshot.jpg" alt="Dane Griffin, smiling outdoors beside a tree in a light button-down shirt" width="1200" height="1800" loading="lazy"></figure>
 </div>
 <div class="sc-wrap"><div class="photo-row photo-row--lead" data-sc-in>
@@ -513,34 +520,35 @@ def build_guides():
   <figure data-sc-in><img src="assets/listing-2521-woody-creek.jpg" alt="Aerial view of a new-home neighborhood in Grand Junction, with an open homesite in front and the Book Cliffs on the horizon" width="1024" height="682" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to buy?</h2>
-    <p>Buying a home is exciting! But it can also be stressful and time consuming. We will use your "wants and needs" list to help you sort through available listings, set up and attend showings, and provide you with relevant information about the different properties. We will continue this process until you find "the one". At this point we will help with all of the contracts and paperwork necessary to complete the transaction.</p>
-    <p>In today's fast-paced market, it is often important to be pre-approved by a lender prior to submitting an offer. If you are not sure where to start, give us a call and we can help! There are many fantastic lenders in town, and we can recommend a few that past clients have really loved. Knowing what your budget is will make you more comfortable and confident as you look at homes since you will know what to expect for a monthly mortgage.</p>
-    <p>So are you ready to start looking? Please call us today and we will start searching!</p>
+    <p>Buying a home is exciting! But it can also be stressful and time consuming. I will use your “wants and needs” list to help you sort through available listings, set up and attend showings, and provide you with relevant information about the different properties. I will continue this process until you find “the one.” At that point I will help with all of the contracts and paperwork necessary to complete the transaction.</p>
+    <p>In today’s fast-paced market, it is often important to be pre-approved by a lender before submitting an offer. If you are not sure where to start, give me a call and I can help! There are many fantastic lenders in town, and I can recommend a few that past clients have really loved. Knowing your budget will make you more comfortable and confident as you look at homes, since you will know what to expect for a monthly mortgage.</p>
+    <p>So are you ready to start looking? Call me today and I will start searching!</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem"><a class="cta cta--solid" href="contact.html">{CTA}</a><a class="cta" href="sellers-guide.html">Seller's guide</a></div>
   </div>
 </div></section>
-<section class="band"><div class="sc-wrap"><div class="prose" style="max-width:52rem" data-sc-in><h2>A step-by-step first-time buyer's guide</h2><p>Buying a home is one of the most exciting milestones of your life. To prepare yourself for this moment, you need to know what to expect during the process. This step-by-step first time buyer’s guide created by our team will help reduce the stress of buying a home and help you enjoy the journey as much as possible.</p></div>
+<section class="band"><div class="sc-wrap"><div class="prose" style="max-width:52rem" data-sc-in><h2>A step-by-step first-time buyer's guide</h2><p>Buying a home is one of life’s most exciting milestones. Knowing what to expect makes the process less stressful and a lot more enjoyable.</p></div>
+{flowchart("buyers-guide-flowchart", "The first-time buyer’s guide on one page", "A one-page flow chart of the ten steps to buying a home: research, decide on your budget, get prequalified, choose a real estate agent, find the right home, make an offer, have the home inspected, select your loan, get a home appraisal, and finish paperwork.")}
 <div style="max-width:52rem;margin-top:3rem">{steps_html(BUY_STEPS)}</div>
-<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>After signing the final paperwork to complete the purchase, you are now the owner of a new house. It may take a few days for your loan to be funded once the paperwork has been returned to the lender, but once that check is delivered to the seller, you’ll be all set to move into the home of your dreams.</p></div></div></section>
-{cta_band("Our goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
+<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>It may take a few days for your loan to fund. Once the seller is paid, you’re ready to move in.</p></div></div></section>
+{cta_band("My goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
     write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "Kelley Griffin's step-by-step guide to buying a home in Fruita and Grand Junction: budget, pre-approval, showings, offers, inspection and closing.", "buyers-guide.html",
-        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-river-canyon.jpg", alt="The Colorado River winding through red rock canyons below a rocky overlook near Fruita"), bbody))
+        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="new-construction-craftsman.jpg", alt="A newly built craftsman-style home with board-and-batten siding, red trim and a covered front porch, under a clear blue sky", whole=True), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
   <figure data-sc-in><img src="assets/kelley-dane-selfie.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a sunny mountain trail" width="1200" height="1600" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to sell?</h2>
-    <p>There are many reasons you may be considering selling your home. Maybe it is time to find a larger home, downsize as kids move away, or move for a new job. For many sellers, the decision to sell often comes down to what their home is worth. Values are constantly changing, but we can provide you with a current market analysis (CMA) so that you can see your home's value in today's market.</p>
-    <p>We will get some basic information about your home and compare it to homes that have recently sold in your area to see what your home could potentially sell for. We are happy to offer this service at no cost.</p>
+    <p>Whether you’re moving up, downsizing, or relocating for a new job, the decision to sell often comes down to what your home is worth. Values are always changing, so I’ll provide a current market analysis (CMA) that compares your home to recent sales in your area. It shows what your home could sell for in today’s market, at no cost to you.</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem"><a class="cta cta--solid" href="contact.html">Ask for a home valuation</a><a class="cta" href="buyers-guide.html">Buyer's guide</a></div>
   </div>
 </div></section>
-<section class="band"><div class="sc-wrap"><div class="prose" style="max-width:52rem" data-sc-in><h2>A step-by-step seller's guide</h2><p>Putting your home on the market can be a stressful process, especially when you don’t know what to expect. Fortunately, with the help of an experienced team of real estate agents and this easy to follow guide, you can smoothly complete the process. Following these steps will help you prepare so you can get organized and sell your home for the best price possible.</p></div>
+<section class="band"><div class="sc-wrap"><div class="prose" style="max-width:52rem" data-sc-in><h2>A step-by-step seller's guide</h2><p>Selling a home can feel stressful when you don’t know what to expect. With an experienced agent and this easy-to-follow guide, you can get organized and sell for the best price possible.</p></div>
+{flowchart("sellers-guide-flowchart", "The seller’s guide on one page", "A one-page flow chart of the eight steps to selling a home: understand why you’re selling, determine selling price, start preparations, develop a marketing strategy, evaluate offers, accept an offer, get ready to close, and close.")}
 <div style="max-width:52rem;margin-top:3rem">{steps_html(SELL_STEPS)}</div>
-<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>Once you have sold your home, you’re free to take the next step on your journey. Whether this is relocating to a new city, moving into a larger home, or downsizing, knowing all your selling responsibilities have been taken care of will help you achieve peace of mind for your new path.</p></div></div></section>
+<div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>Once your home is sold, you’re free to take the next step, whether that’s a new city, a larger home, or downsizing, knowing your selling responsibilities are handled.</p></div></div></section>
 {cta_band("Know what your home is worth.", "A current market analysis, at no cost, from someone who has sold homes in every corner of the valley.")}"""
     write("sellers-guide.html", page_shell(f"Seller's Guide to Selling Your Home | {TEAM}", "Kelley Griffin's step-by-step guide to selling a Grand Valley home: pricing, preparation, marketing, offers and closing, plus a free market analysis.", "sellers-guide.html",
-        page_hero("Selling", "Comprehensive seller's guide", "Pricing, preparation, marketing and closing, with a free market analysis to start.", photo="mesa-fall-overlook.jpg", alt="Golden aspens and dark spruce on the Grand Mesa in fall, with a lake far below"), sbody))
+        page_hero("Selling", "Comprehensive seller's guide", "Pricing, preparation, marketing and closing, with a free market analysis to start.", photo="finished-home-great-room.jpg", alt="A finished great room with vaulted ceilings, wide-plank wood floors, a dining table and a fireplace", whole=True), sbody))
 
 NB_META = {
     "fruita": "Living in Fruita, CO: singletrack trails, a lively downtown and small-town pace. Kelley Griffin's guide to Fruita homes and neighborhoods.",
@@ -557,7 +565,7 @@ def build_neighborhoods():
         cards += f'<a class="card card--type" href="neighborhood-{p["slug"]}.html" data-sc-in><span class="card__n">{i:02d}</span><h3>{esc(p["name"])}</h3><p>{esc(p["blurb"])}</p><span class="sc-label">{esc(p["elev"])}</span><span class="link">Explore {esc(p["name"].replace("The ", "the "))}</span></a>'
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="cards" data-sc-stagger="70" data-sc-in>{cards}</div></div></section>{cta_band("Which one is yours?", "Tell Kelley how you want to live and she will tell you where in the valley that happens.")}"""
     write("neighborhoods.html", page_shell(f"Grand Valley Neighborhoods: Fruita, Redlands, Grand Junction, Loma, Palisade, Grand Mesa | {TEAM}", "Kelley Griffin's guides to Fruita, the Redlands, Grand Junction, Loma, Palisade and the Grand Mesa: recreation, amenities and local attractions.", "neighborhoods.html",
-        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="mesa-view-bookcliffs.jpg", alt="Looking down from the Grand Mesa across the valley to the Book Cliffs on a winter afternoon"), body))
+        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="fruita-river-canyon.jpg", alt="The Colorado River winding through red rock canyons below a rocky overlook near Fruita"), body))
     for i, p in enumerate(PLACES):
         prev_ = PLACES[i-1] if i > 0 else PLACES[-1]; next_ = PLACES[(i+1) % len(PLACES)]
         def ul(items): return "<ul>" + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
@@ -580,13 +588,13 @@ def build_testimonials():
     items = "".join(f'<blockquote class="tcard" data-sc-in><p>{esc(t)}</p><footer>{esc(n)}</footer></blockquote>' for n, t in REVIEWS)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="tcards">{items}</div></div></section>{cta_band()}"""
     write("testimonials.html", page_shell(f"Client Testimonials | {NAME}, {TEAM}", "What clients say about working with Kelley Griffin, Coldwell Banker Distinctive Properties, in Fruita and Grand Junction, Colorado.", "testimonials.html",
-        page_hero("Client words", "What our clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-sunset-road.jpg", alt="Sunset over the Grand Mesa from a snowy road beside the Grand Mesa National Forest sign"), body))
+        page_hero("Client words", "What my clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-sunset-road.jpg", alt="Sunset over the Grand Mesa from a snowy road beside the Grand Mesa National Forest sign"), body))
 
 def build_sold():
     items = "".join(f'<div class="sale" data-sc-in><div class="sale__pic"><img src="assets/{pic}" alt="{esc(addr)}" width="{img_size(pic)[0]}" height="{img_size(pic)[1]}" loading="lazy"></div><div class="sale__price">{price}</div><div class="sale__addr">{esc(addr)}</div><div class="sale__meta">Sold · {esc(meta)}</div></div>' for price, addr, meta, pic in SOLD)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="sales" data-sc-stagger="60" data-sc-in>{items}</div><p class="form__note" style="margin-top:3rem">A selection of past transactions. Property information is derived from county records and the Multiple Listing Service and may include approximations; verify independently.</p></div></section>{cta_band("Know what your home is worth.", "A current market analysis, at no cost.")}"""
     write("sold.html", page_shell(f"Recent Sales in Fruita and Grand Junction | {TEAM}", "A selection of homes and land Kelley Griffin has sold across Fruita and Grand Junction, Colorado.", "sold.html",
-        page_hero("Recent sales", "Past transactions", "Homes, lots and a commercial building, across the valley.", photo="mesa-lake-evening.jpg", alt="Evening sun over a calm lake on the Grand Mesa, with people fishing from the shore"), body))
+        page_hero("Recent sales", "Past transactions", "Homes, lots and a commercial building, across the valley.", photo="mesa-fall-overlook.jpg", alt="Golden aspens and dark spruce on the Grand Mesa in fall, with a lake far below"), body))
 
 def build_contact():
     body = f"""
@@ -625,12 +633,12 @@ def build_contact():
 def build_privacy():
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="prose" data-sc-in>
 <p>This policy explains what happens to information you share on thegriffinteam.com, the website of {NAME}, {TEAM}, {BROKER}.</p>
-<h2>What we collect</h2><p>When you send the contact form, we receive the name, email, phone number, interest and message you type. We collect nothing else about you on purpose. Like every website host, ours keeps short-lived technical logs (such as IP address and browser type) to keep the site running and secure.</p>
-<h2>How we use it</h2><p>Only to answer you and help with your real estate question. Your message is emailed to Kelley. We never sell or rent your information, and we do not add you to a mailing list unless you ask.</p>
-<h2>Who else sees it</h2><p>Our website host, Netlify, and our form provider, FormSubmit, process form messages on our behalf to deliver them to Kelley. If you go on to work with Kelley, your details are shared with {BROKER} as part of the transaction and handled under its privacy practices.</p>
+<h2>What I collect</h2><p>When you send the contact form, I receive the name, email, phone number, interest and message you type. I collect nothing else about you on purpose. Like every website host, mine keeps short-lived technical logs (such as IP address and browser type) to keep the site running and secure.</p>
+<h2>How I use it</h2><p>Only to answer you and help with your real estate question. Your message comes straight to my email. I never sell or rent your information, and I do not add you to a mailing list unless you ask.</p>
+<h2>Who else sees it</h2><p>My website host, Netlify, and my form provider, FormSubmit, process form messages on my behalf to deliver them to me. If you go on to work with me, your details are shared with {BROKER} as part of the transaction and handled under its privacy practices.</p>
 <h2>Cookies and tracking</h2><p>This site sets no advertising or tracking cookies. Fonts load from Google Fonts, which receives your IP address when your browser requests them.</p>
-<h2>Your choices</h2><p>You can ask us to see, correct or delete the information you sent us at any time. Email {EMAIL} or call {PHONE} and we will take care of it.</p>
-<h2>Children</h2><p>This site is not meant for children under 13, and we do not knowingly collect their information.</p>
+<h2>Your choices</h2><p>You can ask me to see, correct or delete the information you sent me at any time. Email {EMAIL} or call {PHONE} and I will take care of it.</p>
+<h2>Children</h2><p>This site is not meant for children under 13, and I do not knowingly collect their information.</p>
 <h2>Changes</h2><p>If this policy changes, the new version will be posted here with a new date.</p>
 <h2>Fair housing</h2><p>{NAME} is committed to the letter and spirit of U.S. fair housing law and the Equal Opportunity Act. Information on this site is believed reliable but not guaranteed.</p>
 </div></div></section>"""
