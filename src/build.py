@@ -339,7 +339,7 @@ def home_body():
         <p>Three boys, one dog, and a husband who <em>builds houses.</em></p>
       </div>
       <div class="meet__pics">
-        <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-dane.jpg" alt="Kelley and Dane Griffin smiling together, dressed up for an evening out" width="1200" height="1600" loading="lazy"></figure>
+        <figure class="meet__pic-a" data-sc-in><img src="assets/kelley-dane-selfie.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a sunny mountain trail" width="1200" height="1600" loading="lazy"></figure>
         <figure class="meet__pic-b" data-sc-in><img src="assets/griffin-family-garden.jpg" alt="The Griffin family, five of them, in a garden among pink flowers" width="1600" height="1926" loading="lazy"></figure>
       </div>
     </div>
@@ -517,7 +517,7 @@ def build_team():
 def build_guides():
     bbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/listing-2521-woody-creek.jpg" alt="Aerial view of a new-home neighborhood in Grand Junction, with an open homesite in front and the Book Cliffs on the horizon" width="1024" height="682" loading="lazy"></figure>
+  <figure data-sc-in><img src="assets/new-construction-craftsman.jpg" alt="A newly built craftsman-style home with board-and-batten siding, red trim and a covered front porch, under a clear blue sky" width="2560" height="1920" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to buy?</h2>
     <p>Buying a home is exciting! But it can also be stressful and time consuming. I will use your “wants and needs” list to help you sort through available listings, set up and attend showings, and provide you with relevant information about the different properties. I will continue this process until you find “the one.” At that point I will help with all of the contracts and paperwork necessary to complete the transaction.</p>
@@ -532,10 +532,10 @@ def build_guides():
 <div class="prose" style="max-width:52rem;margin-top:3rem" data-sc-in><h3>Congratulations!</h3><p>It may take a few days for your loan to fund. Once the seller is paid, you’re ready to move in.</p></div></div></section>
 {cta_band("My goal is personalized service, designed to help you buy your dream home.", "Schedule a consultation and we will start the search together.")}"""
     write("buyers-guide.html", page_shell(f"Buyer's Guide to Buying a Home in the Grand Valley | {TEAM}", "Kelley Griffin's step-by-step guide to buying a home in Fruita and Grand Junction: budget, pre-approval, showings, offers, inspection and closing.", "buyers-guide.html",
-        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="new-construction-craftsman.jpg", alt="A newly built craftsman-style home with board-and-batten siding, red trim and a covered front porch, under a clear blue sky", whole=True), bbody))
+        page_hero("Buying", "Step-by-step buyer's guide", "From the wants-and-needs list to the keys in your hand.", photo="fruita-river-canyon.jpg", alt="The Colorado River winding through red rock canyons below a rocky overlook near Fruita"), bbody))
     sbody = f"""
 <section class="sc-section" style="padding-top:0"><div class="sc-wrap split split--sticky">
-  <figure data-sc-in><img src="assets/kelley-dane-selfie.jpg" alt="Kelley and Dane Griffin smiling in a selfie on a sunny mountain trail" width="1200" height="1600" loading="lazy"></figure>
+  <figure data-sc-in><img src="assets/listing-2521-woody-creek.jpg" alt="Aerial view of a new-home neighborhood in Grand Junction, with an open homesite in front and the Book Cliffs on the horizon" width="1024" height="682" loading="lazy"></figure>
   <div class="prose" data-sc-in data-sc-stagger="60">
     <h2>Ready to sell?</h2>
     <p>Whether you’re moving up, downsizing, or relocating for a new job, the decision to sell often comes down to what your home is worth. Values are always changing, so I’ll provide a current market analysis (CMA) that compares your home to recent sales in your area. It shows what your home could sell for in today’s market, at no cost to you.</p>
@@ -565,7 +565,7 @@ def build_neighborhoods():
         cards += f'<a class="card card--type" href="neighborhood-{p["slug"]}.html" data-sc-in><span class="card__n">{i:02d}</span><h3>{esc(p["name"])}</h3><p>{esc(p["blurb"])}</p><span class="sc-label">{esc(p["elev"])}</span><span class="link">Explore {esc(p["name"].replace("The ", "the "))}</span></a>'
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="cards" data-sc-stagger="70" data-sc-in>{cards}</div></div></section>{cta_band("Which one is yours?", "Tell Kelley how you want to live and she will tell you where in the valley that happens.")}"""
     write("neighborhoods.html", page_shell(f"Grand Valley Neighborhoods: Fruita, Redlands, Grand Junction, Loma, Palisade, Grand Mesa | {TEAM}", "Kelley Griffin's guides to Fruita, the Redlands, Grand Junction, Loma, Palisade and the Grand Mesa: recreation, amenities and local attractions.", "neighborhoods.html",
-        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="fruita-river-canyon.jpg", alt="The Colorado River winding through red rock canyons below a rocky overlook near Fruita"), body))
+        page_hero("Neighborhoods", "Six places. One valley.", "West to east, the places Kelley helps people buy and sell.", photo="mesa-snowy-trail.jpg", alt="A groomed ski trail through deep snow and dark spruce on the Grand Mesa, under a bright winter sky"), body))
     for i, p in enumerate(PLACES):
         prev_ = PLACES[i-1] if i > 0 else PLACES[-1]; next_ = PLACES[(i+1) % len(PLACES)]
         def ul(items): return "<ul>" + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
@@ -588,7 +588,7 @@ def build_testimonials():
     items = "".join(f'<blockquote class="tcard" data-sc-in><p>{esc(t)}</p><footer>{esc(n)}</footer></blockquote>' for n, t in REVIEWS)
     body = f"""<section class="sc-section" style="padding-top:0"><div class="sc-wrap"><div class="tcards">{items}</div></div></section>{cta_band()}"""
     write("testimonials.html", page_shell(f"Client Testimonials | {NAME}, {TEAM}", "What clients say about working with Kelley Griffin, Coldwell Banker Distinctive Properties, in Fruita and Grand Junction, Colorado.", "testimonials.html",
-        page_hero("Client words", "What my clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="mesa-sunset-road.jpg", alt="Sunset over the Grand Mesa from a snowy road beside the Grand Mesa National Forest sign"), body))
+        page_hero("Client words", "What my clients say", f"{NUMBER_WORDS.get(len(REVIEWS), len(REVIEWS))} of the people Kelley has helped, in their own words.", photo="client-words-monument.jpg", alt="Golden evening light on a sandstone cliff in the Colorado National Monument, above a grassy meadow and cottonwoods"), body))
 
 def build_sold():
     items = "".join(f'<div class="sale" data-sc-in><div class="sale__pic"><img src="assets/{pic}" alt="{esc(addr)}" width="{img_size(pic)[0]}" height="{img_size(pic)[1]}" loading="lazy"></div><div class="sale__price">{price}</div><div class="sale__addr">{esc(addr)}</div><div class="sale__meta">Sold · {esc(meta)}</div></div>' for price, addr, meta, pic in SOLD)
