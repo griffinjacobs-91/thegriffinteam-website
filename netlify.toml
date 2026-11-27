@@ -1,14 +1,15 @@
 # Netlify settings for thegriffinteam.com. Netlify reads this file on every deploy.
 
 [build]
-  command = "python3 src/build.py"
+  command = "python3 --version && python3 src/build.py"
   publish = "site"
   # Skip the build (and its credits) when a change only touches the photo inbox or the notes for Claude.
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)inbox' ':(exclude)CLAUDE.md' ':(exclude)README.md' ':(exclude)docs'"
 
 [build.environment]
   SITE = "https://thegriffinteam.com"
-  PYTHON_VERSION = "3.11"
+  # No PYTHON_VERSION on purpose: the build uses only Python's standard library and runs on the Python
+  # Netlify's build image already has. Pinning a version makes Netlify download it at build time, which can fail.
 
 # ---- Old Luxury Presence addresses, so links in Google, emails and the AI answer engines keep working ----
 [[redirects]]
